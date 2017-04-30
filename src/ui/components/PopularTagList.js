@@ -12,7 +12,7 @@ function view(vnode) {
 	}
 
 	return m('div', [
-		m('p', 'Popular Tags!!!'),
+		m('p', 'Popular Tags'),
 		tagsContent
 	]);
 };
