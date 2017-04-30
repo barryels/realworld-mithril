@@ -64,6 +64,7 @@ var routes = {
 
 
 function init() {
+	m.route.prefix('?');
 	m.route(document.getElementById('app'), '/', routes);
 }
 
