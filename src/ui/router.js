@@ -20,7 +20,7 @@ var routes = {
 			return m(LayoutDefault, m(ScreenHome));
 		}
 	},
-	'/article/:id': {
+	'/article/:slug': {
 		view: function () {
 			return m(LayoutDefault, m(ScreenArticle));
 		}

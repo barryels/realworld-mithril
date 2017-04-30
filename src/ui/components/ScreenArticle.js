@@ -1,20 +1,25 @@
 var m = require('mithril');
 
 
+var domain = require('./../../domain');
 var utils = require('./../utils');
 var Banner = require('./Banner');
 
 
 function oninit() {
-	utils.updateDocumentTitle('Article');
+	domain.actions.getArticle(m.route.param('slug'));
+}
+
+
+function onupdate() {
+	utils.updateDocumentTitle(domain.store.selectedArticle.data.title);
 }
 
 
 function view() {
 	return m('div.article-page',
 		[
-			m(Banner),
-			m('h1', 'Article')
+			m(Banner)
 		]
 	);
 };
@@ -22,5 +27,6 @@ function view() {
 
 module.exports = {
 	oninit: oninit,
+	onupdate: onupdate,
 	view: view
 };

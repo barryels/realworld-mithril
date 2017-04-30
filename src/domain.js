@@ -6,6 +6,10 @@ var state = {
 	articles: null,
 	articlesByTag: {},
 	tags: {},
+	selectedArticle: {
+		data: null,
+		isLoading: false
+	},
 	userAuthorizationToken: null,
 	isUserLoginBusy: false,
 	userLoginErrors: null,
@@ -92,6 +96,23 @@ var actions = {
 			.then(function (articles) {
 				state.articlesByTag.tag = tag;
 				state.articlesByTag.list = articles;
+			});
+	},
+
+
+	getArticle: function (slug) {
+		state.selectedArticle.data = null;
+		state.selectedArticle.isLoading = true;
+
+		m.request({
+			method: 'GET',
+			url: API_BASE_URI + '/articles/' + slug
+		})
+			.then(function (response) {
+				state.selectedArticle.data = response.article;
+			})
+			.then(function () {
+				state.selectedArticle.isLoading = false;
 			});
 	},
 
