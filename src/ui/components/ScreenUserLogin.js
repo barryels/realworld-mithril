@@ -8,15 +8,22 @@ var UserLoginForm = require('./UserLoginForm');
 var ListErrors = require('./ListErrors');
 
 
+function redirectIfUserLoggedIn() {
+	if (domain.store.user) {
+		domain.actions.redirectAfterUserLoginSuccess();
+	}
+}
+
+
 function oninit() {
 	utils.updateDocumentTitle('Sign in');
+
+	redirectIfUserLoggedIn();
 }
 
 
 function onupdate() {
-	if (domain.store.user) {
-		domain.actions.redirectAfterUserLoginSuccess();
-	}
+	redirectIfUserLoggedIn();
 }
 
 
