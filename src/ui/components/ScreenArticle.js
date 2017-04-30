@@ -4,6 +4,7 @@ var m = require('mithril');
 var domain = require('./../../domain');
 var utils = require('./../utils');
 var Banner = require('./Banner');
+var ArticleBanner = require('./ArticleBanner');
 
 
 function oninit() {
@@ -19,7 +20,10 @@ function onupdate() {
 function view() {
 	return m('div.article-page',
 		[
-			m(Banner)
+			m(Banner,
+				m(ArticleBanner, { article: domain.store.selectedArticle })
+			),
+			m('pre', JSON.stringify(domain.store.selectedArticle, '', 2))
 		]
 	);
 };
