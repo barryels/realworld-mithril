@@ -22,6 +22,8 @@ var state = {
 	userRegistrationErrors: null,
 	isUserSettingsUpdateBusy: false,
 	userUpdateSettingsErrors: null,
+	isCreateArticleBusy: false,
+	createArticleErrors: null,
 	user: null,
 	selectedUserProfile: {
 		data: null,
@@ -146,6 +148,50 @@ var actions = {
 			})
 			.then(function () {
 				state.selectedArticleComments.isLoading = true;
+			});
+	},
+
+
+	createArticle: function (payload) {
+		state.isCreateArticleBusy = true;
+		state.createArticleErrors = null;
+
+		// Format tagList before sending to API
+		var tagList = payload.tagList
+			.split(',')
+			.join('-|-')
+			.split(' ')
+			.join('-|-')
+			.split('-|-')
+			.filter(function (tag) {
+				return tag !== '';
+			});
+
+		m.request({
+			method: 'POST',
+			url: API_BASE_URI + '/articles/',
+			headers: {
+				'Authorization': 'Token ' + state.user.token
+			},
+			data: {
+				article: {
+					title: payload.title,
+					description: payload.description,
+					body: payload.body,
+					tagList: tagList
+				}
+			}
+		})
+			.then(function (response) {
+				state.createArticleErrors = null;
+				state.newArticle = response.article;
+				m.route.set('/article/' + state.newArticle.slug);
+			})
+			.catch(function (e) {
+				state.createArticleErrors = getErrorMessageFromAPIErrorObject(e);
+			})
+			.then(function () {
+				state.isCreateArticleBusy = false;
 			});
 	},
 
