@@ -5,7 +5,8 @@ var domain = require('./../../domain');
 var utils = require('./../utils');
 var Banner = require('./Banner');
 var ArticleBanner = require('./ArticleBanner');
-
+var ArticleContent = require('./ArticleContent');
+var ArticleMeta = require('./ArticleMeta');
 
 function oninit() {
 	domain.actions.getArticle(m.route.param('slug'));
@@ -23,7 +24,15 @@ function view() {
 			m(Banner,
 				m(ArticleBanner, { article: domain.store.selectedArticle })
 			),
-			m('pre', JSON.stringify(domain.store.selectedArticle, '', 2))
+			m('div.container', [
+				m('div.row', [
+					m(ArticleContent, { article: domain.store.selectedArticle }),
+				]),
+				m('hr'),
+				m('div.article-actions', [
+					m(ArticleMeta, { article: domain.store.selectedArticle })
+				])
+			])
 		]
 	);
 };
