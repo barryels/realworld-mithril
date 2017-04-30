@@ -6,7 +6,7 @@ var utils = require('./../utils');
 var Banner = require('./Banner');
 var ArticleList = require('./ArticleList');
 var FeedToggle = require('./FeedToggle');
-var Tags = require('./Tags');
+var PopularTagList = require('./PopularTagList');
 
 
 function onTagItemClick(tag) {
@@ -32,7 +32,7 @@ function view() {
 						m(ArticleList, { articles: domain.store.articles })
 					]),
 					m('.col-md-3', [
-						m('.sidebar', m(Tags, { fn_onTagItemClick: onTagItemClick, isLoading: domain.store.tags.isLoading, list: domain.store.tags.list }))
+						m('.sidebar', m(PopularTagList, { fn_onTagItemClick: onTagItemClick, isLoading: domain.store.tags.isLoading, list: domain.store.tags.list }))
 					])
 				])
 			])

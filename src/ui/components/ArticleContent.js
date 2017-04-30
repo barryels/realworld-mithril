@@ -13,7 +13,7 @@ function view(vnode) {
 		content = [
 			m('div.col-xs-12', [
 				m('div', m.trust(utils.convertMarkdownToHTML(article.body))),
-				m(TagList, { list: article.tagList })
+				m(TagList, { list: article.tagList, style: TagList.styles.OUTLINE })
 			])
 		];
 	}
