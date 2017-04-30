@@ -15,7 +15,7 @@ function oninit() {
 
 function onupdate() {
 	if (domain.store.user) {
-		domain.actions.redirectAfterLoginSuccess();
+		domain.actions.redirectAfterUserLoginSuccess();
 	}
 }
 
@@ -26,7 +26,7 @@ function view() {
 			m('.container.page', [
 				m('.row', [
 					m('.col-md-6.offset-md-3.col-xs-12', [
-						m('h1.text-xs-center', 'Sign In'),
+						m('h1.text-xs-center', 'Sign in'),
 						m('p.text-xs-center',
 							m(Link, { to: '/register' }, 'Need an account?')
 						),

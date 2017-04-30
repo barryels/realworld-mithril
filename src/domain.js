@@ -13,6 +13,8 @@ var state = {
 	userAuthorizationToken: null,
 	isUserLoginBusy: false,
 	userLoginErrors: null,
+	isUserRegistrationBusy: false,
+	userRegistrationErrors: null,
 	isUserSettingsUpdateBusy: false,
 	userUpdateSettingsErrors: null,
 	user: null,
@@ -117,6 +119,35 @@ var actions = {
 	},
 
 
+	registerNewUser: function (payload) {
+		state.isUserRegistrationBusy = true;
+		state.userRegistrationErrors = null;
+
+		m.request({
+			method: 'POST',
+			url: API_BASE_URI + '/users',
+			data: {
+				user: {
+					email: payload.email,
+					password: payload.password,
+					username: payload.username
+				}
+			}
+		})
+			.then(function (response) {
+				state.userRegistrationErrors = null;
+				state.user = response.user;
+				window.localStorage.setItem('jwt', state.user.token);
+			})
+			.catch(function (e) {
+				state.userRegistrationErrors = getErrorMessageFromAPIErrorObject(e);
+			})
+			.then(function () {
+				state.isUserRegistrationBusy = false;
+			});
+	},
+
+
 	attemptUserLogin: function (email, password) {
 		window.localStorage.setItem('jwt', null);
 		state.user = null;
@@ -147,7 +178,16 @@ var actions = {
 	},
 
 
-	redirectAfterLoginSuccess: function () {
+	redirectAfterUserLoginSuccess: function () {
+		if (window.history.length > 0) {
+			window.history.back();
+		} else {
+			m.route.set('/');
+		}
+	},
+
+
+	redirectAfterUserRegistrationSuccess: function () {
 		if (window.history.length > 0) {
 			window.history.back();
 		} else {
