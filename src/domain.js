@@ -15,7 +15,6 @@ var state = {
 		isLoading: false
 	},
 	isNewCommentSubmissionBusy: false,
-	newCommentSubmissionErrors: null,
 	userAuthorizationToken: null,
 	isUserLoginBusy: false,
 	userLoginErrors: null,
@@ -147,6 +146,30 @@ var actions = {
 			})
 			.then(function () {
 				state.selectedArticleComments.isLoading = false;
+			});
+	},
+
+
+	createNewComment: function (payload) {
+		state.isNewCommentSubmissionBusy = true;
+
+		m.request({
+			method: 'POST',
+			url: API_BASE_URI + '/articles/' + payload.articleSlug + '/comments',
+			headers: {
+				'Authorization': 'Token ' + state.user.token
+			},
+			data: {
+				comment: {
+					body: payload.body
+				}
+			}
+		})
+			.then(function () {
+				state.isNewCommentSubmissionBusy = false;
+			})
+			.then(function () {
+				actions.setSelectedArticleComments(payload.articleSlug);
 			});
 	},
 
