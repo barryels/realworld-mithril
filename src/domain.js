@@ -52,6 +52,15 @@ function getErrorMessageFromAPIErrorObject(e) {
 }
 
 
+function redirectToPreviousPageOrHome() {
+	if (window.history.length > 0) {
+		window.history.back();
+	} else {
+		m.route.set('/');
+	}
+}
+
+
 function getArticles(payload) {
 	/*
 	TODO
@@ -200,20 +209,12 @@ var actions = {
 
 
 	redirectAfterUserLoginSuccess: function () {
-		if (window.history.length > 0) {
-			window.history.back();
-		} else {
-			m.route.set('/');
-		}
+		redirectToPreviousPageOrHome();
 	},
 
 
 	redirectAfterUserRegistrationSuccess: function () {
-		if (window.history.length > 0) {
-			window.history.back();
-		} else {
-			m.route.set('/');
-		}
+		redirectToPreviousPageOrHome();
 	},
 
 
