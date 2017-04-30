@@ -8,8 +8,30 @@ var ArticleBanner = require('./ArticleBanner');
 var ArticleContent = require('./ArticleContent');
 var ArticleMeta = require('./ArticleMeta');
 
+
+var state = {
+	slug: ''
+};
+
+
+function getArticle() {
+	state.slug = m.route.param('slug');
+	domain.actions.getArticle(state.slug);
+	document.body.scrollTop = 0;
+}
+
+
 function oninit() {
-	domain.actions.getArticle(m.route.param('slug'));
+	getArticle();
+}
+
+
+function onbeforeupdate() {
+	if (state.slug !== m.route.param('slug')) {
+		getArticle();
+	}
+
+	return true;
 }
 
 
@@ -40,6 +62,7 @@ function view() {
 
 module.exports = {
 	oninit: oninit,
+	onbeforeupdate: onbeforeupdate,
 	onupdate: onupdate,
 	view: view
 };
