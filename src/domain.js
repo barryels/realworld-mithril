@@ -169,7 +169,7 @@ var actions = {
 
 		m.request({
 			method: 'POST',
-			url: API_BASE_URI + '/articles/',
+			url: API_BASE_URI + '/articles',
 			headers: {
 				'Authorization': 'Token ' + state.user.token
 			},
