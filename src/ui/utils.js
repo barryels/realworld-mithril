@@ -1,6 +1,9 @@
 var domain = require('./../domain');
 
 
+var xssFilters = require('xss-filters');
+
+
 function getMonthName(index, language, type) {
 	var _language = language ? language.toLowerCase() : 'en';
 	var _type = type ? type.toLowerCase() : 'long';
@@ -38,6 +41,11 @@ function convertMarkdownToHTML(content) {
 }
 
 
+function formatArticleCommentBodyText(content) {
+	return convertMarkdownToHTML(xssFilters.inHTMLData(content));
+}
+
+
 function getLinkToUserProfile(username) {
 	return '/@' + username;
 }
@@ -55,6 +63,7 @@ function getUserImageOrDefault(user) {
 module.exports = {
 	updateDocumentTitle: updateDocumentTitle,
 	formatDate: formatDate,
+	formatArticleCommentBodyText: formatArticleCommentBodyText,
 	convertMarkdownToHTML: convertMarkdownToHTML,
 	getLinkToUserProfile: getLinkToUserProfile,
 	getUserImageOrDefault: getUserImageOrDefault

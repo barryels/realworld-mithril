@@ -10,7 +10,7 @@ function view(vnode) {
 
 	return m('div.card', [
 		m('div.card-block',
-			m('p.card-text', comment.body)
+			m('p.card-text', m.trust(utils.formatArticleCommentBodyText(comment.body)))
 		),
 		m('div.card-footer', [
 			m(Link, { className: 'comment-author', to: utils.getLinkToUserProfile(comment.author.username) },

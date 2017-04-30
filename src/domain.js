@@ -14,7 +14,7 @@ var state = {
 		data: null,
 		isLoading: false
 	},
-	isNewCommentSubmissionBusy: false,
+	isArticleCommentCreationBusy: false,
 	userAuthorizationToken: null,
 	isUserLoginBusy: false,
 	userLoginErrors: null,
@@ -145,13 +145,13 @@ var actions = {
 				state.selectedArticleComments.data = response.comments;
 			})
 			.then(function () {
-				state.selectedArticleComments.isLoading = false;
+				state.selectedArticleComments.isLoading = true;
 			});
 	},
 
 
-	createNewComment: function (payload) {
-		state.isNewCommentSubmissionBusy = true;
+	createArticleComment: function (payload) {
+		state.isArticleCommentCreationBusy = true;
 
 		m.request({
 			method: 'POST',
@@ -166,7 +166,7 @@ var actions = {
 			}
 		})
 			.then(function () {
-				state.isNewCommentSubmissionBusy = false;
+				state.isArticleCommentCreationBusy = false;
 			})
 			.then(function () {
 				actions.setSelectedArticleComments(payload.articleSlug);

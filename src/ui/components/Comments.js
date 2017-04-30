@@ -14,21 +14,25 @@ function view(vnode) {
 		m(Link, { to: '/register' }, 'Sign up'),
 		m('span', ' to add comments on this article.')
 	]);
-	var content = m('div', '...');
+	var body = null;
 
 	if (vnode.attrs.currentUser) {
 		header = m(NewCommentForm);
 	}
 
+	if (vnode.attrs.comments.isLoading) {
+		body = m('div', 'Loading...');
+	}
+
 	if (comments) {
-		content = comments.map(function (comment) {
-			return m(Comment, { comment: comment });
+		body = comments.map(function (comment) {
+			return m(Comment, { comment: comment, key: comment.id });
 		});
 	}
 
 	return m('div.comments', [
 		header,
-		content
+		body
 	]);
 };
 

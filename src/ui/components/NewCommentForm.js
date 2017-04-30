@@ -19,7 +19,7 @@ function setInputValue(name, value) {
 
 
 function isFormSubmissionBusy() {
-	return domain.store.isNewCommentSubmissionBusy;
+	return domain.store.isArticleCommentCreationBusy;
 }
 
 function isFormSubmitDisabled() {
@@ -31,16 +31,16 @@ function onFormSubmit(e) {
 	e.preventDefault();
 
 	setInputValue('articleSlug', domain.store.selectedArticle.data.slug);
-	domain.actions.createNewComment(state.formData);
+	domain.actions.createArticleComment(state.formData);
 	setInputValue('body', '');
 }
 
 
 function view() {
 	return m('div', [
-		m('form.card comment-form', { disabled: !isFormSubmissionBusy(), onsubmit: onFormSubmit },
+		m('form.card comment-form', { disabled: isFormSubmissionBusy(), onsubmit: onFormSubmit },
 			m('div.card-block',
-				m('textarea.form-control', { oninput: m.withAttr('value', setInputValue.bind(null, 'body')), value: state.formData.body, autocomplete: 'off', rows: '3', placeholder: 'Write a comment...', disabled: domain.store.isNewCommentSubmissionBusy })
+				m('textarea.form-control', { oninput: m.withAttr('value', setInputValue.bind(null, 'body')), value: state.formData.body, autocomplete: 'off', disabled: isFormSubmissionBusy(), rows: '3', placeholder: 'Write a comment...' })
 			),
 			m('div.card-footer', [
 				m('img.comment-author-img', { src: utils.getUserImageOrDefault(domain.store.user) }),
