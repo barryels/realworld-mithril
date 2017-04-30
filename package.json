@@ -19,12 +19,6 @@
     "url": "https://github.com/barryels/realworld-mithril/issues"
   },
   "homepage": "https://github.com/barryels/realworld-mithril#readme",
-  "dependencies": {
-    "dateformat": "^2.0.0",
-    "marked": "^0.3.6",
-    "mithril": "^1.1.1",
-    "xss-filters": "^1.2.7"
-  },
   "scripts": {
     "ui-server": "./node_modules/http-server/bin/http-server public -p 3000 -s",
     "ui-build-js-prod": "browserify src/index.js -o public/main.js",
@@ -33,6 +27,12 @@
     "start": "npm run dev",
     "lint": "eslint \"src/**/*.js\"",
     "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "dependencies": {
+    "dateformat": "^2.0.0",
+    "marked": "^0.3.6",
+    "mithril": "^1.1.1",
+    "xss-filters": "^1.2.7"
   },
   "devDependencies": {
     "browserify": "^14.3.0",
