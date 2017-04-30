@@ -60,7 +60,7 @@ function view() {
 				]),
 				m('div.row',
 					m('div.col-xs-12.col-md-8.offset-md-2',
-						m(Comments, { comments: domain.store.selectedArticleComments })
+						m(Comments, { comments: domain.store.selectedArticleComments, currentUser: domain.store.user })
 					)
 				)
 			])

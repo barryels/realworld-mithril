@@ -14,6 +14,8 @@ var state = {
 		data: null,
 		isLoading: false
 	},
+	isNewCommentSubmissionBusy: false,
+	newCommentSubmissionErrors: null,
 	userAuthorizationToken: null,
 	isUserLoginBusy: false,
 	userLoginErrors: null,
