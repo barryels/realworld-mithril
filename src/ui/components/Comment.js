@@ -22,20 +22,6 @@ function view(vnode) {
 			),
 			m('span.date-posted', utils.formatDate(comment.createdAt))
 		])
-
-		/*
-		<div class="card-footer">
-			<a class="comment-author" ui-sref="app.profile.main({ username: $ctrl.data.author.username })" href="#/@thingybingy">
-			  <img ng-src="https://static.productionready.io/images/smiley-cyrus.jpg" class="comment-author-img" src="https://static.productionready.io/images/smiley-cyrus.jpg">
-			</a>
-			&nbsp;
-			<a class="comment-author ng-binding" ui-sref="app.profile.main({ username: $ctrl.data.author.username })" ng-bind="::$ctrl.data.author.username" href="#/@thingybingy">thingybingy</a>
-			<span class="date-posted ng-binding" ng-bind="::$ctrl.data.createdAt | date: 'longDate' ">April 26, 2017</span>
-			<span class="mod-options ng-hide" ng-show="$ctrl.canModify">
-			  <i class="ion-trash-a" ng-click="$ctrl.deleteCb()"></i>
-			</span>
-		  </div>
-		*/
 	]);
 };
 
