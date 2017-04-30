@@ -2,6 +2,7 @@ var m = require('mithril');
 
 
 var utils = require('./../utils');
+var TagList = require('./TagList');
 
 
 function view(vnode) {
@@ -11,8 +12,8 @@ function view(vnode) {
 	if (article) {
 		content = [
 			m('div.col-xs-12', [
-				m('div', m.trust(utils.formatArticleBody(article.body))),
-				m('div.tag-list')
+				m('div', m.trust(utils.convertMarkdownToHTML(article.body))),
+				m(TagList, { list: article.tagList })
 			])
 		];
 	}

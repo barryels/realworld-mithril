@@ -31,17 +31,15 @@ function formatDate(date) {
 }
 
 
-function formatArticleBody(body) {
-	// Enable Markdown parsing in future?
+function convertMarkdownToHTML(content) {
+	var marked = require('marked');
 
-	return body.split('\r\n').map(function (line) {
-		return '<p>' + line + '</p>';
-	}).join('');
+	return marked(content);
 }
 
 
 module.exports = {
 	updateDocumentTitle: updateDocumentTitle,
 	formatDate: formatDate,
-	formatArticleBody: formatArticleBody
+	convertMarkdownToHTML: convertMarkdownToHTML
 };
