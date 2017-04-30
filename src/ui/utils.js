@@ -43,9 +43,19 @@ function getLinkToUserProfile(username) {
 }
 
 
+function getUserImageOrDefault(user) {
+	if (user && (user.image)) {
+		return user.image;
+	}
+
+	return 'https://static.productionready.io/images/smiley-cyrus.jpg';
+}
+
+
 module.exports = {
 	updateDocumentTitle: updateDocumentTitle,
 	formatDate: formatDate,
 	convertMarkdownToHTML: convertMarkdownToHTML,
-	getLinkToUserProfile: getLinkToUserProfile
+	getLinkToUserProfile: getLinkToUserProfile,
+	getUserImageOrDefault: getUserImageOrDefault
 };
