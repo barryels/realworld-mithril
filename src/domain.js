@@ -1,21 +1,6 @@
 var m = require('mithril');
 
 
-// TODO: Refactor state object as the app grows
-// TODO: POST /api/profiles/:username/follow
-// TODO: DELETE /api/profiles/:username/follow
-// TODO: GET /api/articles/feed
-// TODO: GET /api/articles/:slug
-// TODO: POST /api/articles
-// TODO: PUT /api/articles/:slug
-// TODO: DELETE /api/articles/:slug
-// TODO: POST /api/articles/:slug/comments
-// TODO: GET /api/articles/:slug/comments
-// TODO: DELETE /api/articles/:slug/comments/:id
-// TODO: POST /api/articles/:slug/favorite
-// TODO: DELETE /api/articles/:slug/favorite
-
-
 var state = {
 	appTitle: 'Conduit',
 	articles: null,
