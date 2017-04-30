@@ -22,9 +22,15 @@ function oninit() {
 
 
 function view() {
+	var banner = m(Banner);
+
+	if (domain.store.user) {
+		banner = null;
+	}
+
 	return m('div.home-page',
 		[
-			m(Banner),
+			banner,
 			m('.container.page', [
 				m('.row', [
 					m('.col-md-9', [
