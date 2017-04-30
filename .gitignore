@@ -17,4 +17,4 @@ Thumbs.db
 npm-debug*.log
 
 # Outputs
-/public/main.js
+# /public/main.js # keeping main.js for GitHub hosting purposes
