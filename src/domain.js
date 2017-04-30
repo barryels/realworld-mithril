@@ -17,6 +17,7 @@ var m = require('mithril');
 
 
 var state = {
+	appTitle: 'Conduit',
 	articles: null,
 	articlesByTag: {},
 	tags: {},

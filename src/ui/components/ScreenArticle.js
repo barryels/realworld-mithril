@@ -1,7 +1,13 @@
 var m = require('mithril');
 
 
+var utils = require('./../utils');
 var Banner = require('./Banner');
+
+
+function oninit() {
+	utils.updateDocumentTitle('Article');
+}
 
 
 function view() {
@@ -15,5 +21,6 @@ function view() {
 
 
 module.exports = {
+	oninit: oninit,
 	view: view
 };

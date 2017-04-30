@@ -2,6 +2,7 @@ var m = require('mithril');
 
 
 var domain = require('./../../domain');
+var utils = require('./../utils');
 var Banner = require('./Banner');
 var ArticleList = require('./ArticleList');
 var FeedToggle = require('./FeedToggle');
@@ -14,6 +15,7 @@ function onTagItemClick(tag) {
 
 
 function oninit() {
+	utils.updateDocumentTitle('Home');
 	domain.actions.getAllArticles();
 	domain.actions.getTags();
 }

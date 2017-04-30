@@ -2,8 +2,14 @@ var m = require('mithril');
 
 
 var domain = require('./../../domain');
+var utils = require('./../utils');
 var ListErrors = require('./ListErrors');
 var UserSettingsForm = require('./UserSettingsForm');
+
+
+function oninit() {
+	utils.updateDocumentTitle('Settings');
+}
 
 
 function view() {
@@ -24,5 +30,6 @@ function view() {
 
 
 module.exports = {
+	oninit: oninit,
 	view: view
 };

@@ -2,6 +2,7 @@ var m = require('mithril');
 
 
 var domain = require('./../../domain');
+var utils = require('./../utils');
 var UserInfoBanner = require('./UserInfoBanner');
 var UserArticlesToggle = require('./UserArticlesToggle');
 var ArticleList = require('./ArticleList');
@@ -34,6 +35,11 @@ function onbeforeupdate() {
 }
 
 
+function onupdate() {
+	utils.updateDocumentTitle('@' + state.username);
+}
+
+
 function view() {
 	return m('.profile-page',
 		[
@@ -41,7 +47,7 @@ function view() {
 			m('.container', [
 				m('.row', [
 					m('.col-md-12', [
-						m(UserArticlesToggle),
+						m(UserArticlesToggle, { username: state.username }),
 						m(ArticleList, { articles: domain.store.articles })
 					])
 				])
@@ -54,5 +60,6 @@ function view() {
 module.exports = {
 	oninit: oninit,
 	onbeforeupdate: onbeforeupdate,
+	onupdate: onupdate,
 	view: view
 };
