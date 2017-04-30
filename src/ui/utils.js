@@ -38,8 +38,14 @@ function convertMarkdownToHTML(content) {
 }
 
 
+function getLinkToUserProfile(username) {
+	return '/@' + username;
+}
+
+
 module.exports = {
 	updateDocumentTitle: updateDocumentTitle,
 	formatDate: formatDate,
-	convertMarkdownToHTML: convertMarkdownToHTML
+	convertMarkdownToHTML: convertMarkdownToHTML,
+	getLinkToUserProfile: getLinkToUserProfile
 };

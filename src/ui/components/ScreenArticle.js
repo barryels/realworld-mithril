@@ -7,6 +7,7 @@ var Banner = require('./Banner');
 var ArticleBanner = require('./ArticleBanner');
 var ArticleContent = require('./ArticleContent');
 var ArticleMeta = require('./ArticleMeta');
+var Comments = require('./Comments');
 
 
 var state = {
@@ -16,7 +17,8 @@ var state = {
 
 function getArticle() {
 	state.slug = m.route.param('slug');
-	domain.actions.getArticle(state.slug);
+	domain.actions.setSelectedArticle(state.slug);
+	domain.actions.setSelectedArticleComments(state.slug);
 	document.body.scrollTop = 0;
 }
 
@@ -36,7 +38,9 @@ function onbeforeupdate() {
 
 
 function onupdate() {
-	utils.updateDocumentTitle(domain.store.selectedArticle.data.title);
+	if (domain.store.selectedArticle.data) {
+		utils.updateDocumentTitle(domain.store.selectedArticle.data.title);
+	}
 }
 
 
@@ -53,7 +57,12 @@ function view() {
 				m('hr'),
 				m('div.article-actions', [
 					m(ArticleMeta, { article: domain.store.selectedArticle })
-				])
+				]),
+				m('div.row',
+					m('div.col-xs-12.col-md-8.offset-md-2',
+						m(Comments, { comments: domain.store.selectedArticleComments })
+					)
+				)
 			])
 		]
 	);

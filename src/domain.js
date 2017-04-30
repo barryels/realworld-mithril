@@ -10,6 +10,10 @@ var state = {
 		data: null,
 		isLoading: false
 	},
+	selectedArticleComments: {
+		data: null,
+		isLoading: false
+	},
 	userAuthorizationToken: null,
 	isUserLoginBusy: false,
 	userLoginErrors: null,
@@ -102,11 +106,11 @@ var actions = {
 	},
 
 
-	getArticle: function (slug) {
+	setSelectedArticle: function (slug) {
 		state.selectedArticle.data = null;
 		state.selectedArticle.isLoading = true;
 
-		m.request({
+		return m.request({
 			method: 'GET',
 			url: API_BASE_URI + '/articles/' + slug
 		})
@@ -115,6 +119,23 @@ var actions = {
 			})
 			.then(function () {
 				state.selectedArticle.isLoading = false;
+			});
+	},
+
+
+	setSelectedArticleComments: function (slug) {
+		state.selectedArticleComments.data = null;
+		state.selectedArticleComments.isLoading = true;
+
+		return m.request({
+			method: 'GET',
+			url: API_BASE_URI + '/articles/' + slug + '/comments'
+		})
+			.then(function (response) {
+				state.selectedArticleComments.data = response.comments;
+			})
+			.then(function () {
+				state.selectedArticleComments.isLoading = false;
 			});
 	},
 
