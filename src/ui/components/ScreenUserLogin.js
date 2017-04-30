@@ -15,7 +15,7 @@ function oninit() {
 
 function onupdate() {
 	if (domain.store.user) {
-		m.route.set('/');
+		domain.actions.redirectAfterLoginSuccess();
 	}
 }
 

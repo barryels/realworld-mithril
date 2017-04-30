@@ -147,6 +147,16 @@ var actions = {
 	},
 
 
+	redirectAfterLoginSuccess: function () {
+		console.log(window.history.length);
+		if (window.history.length > 0) {
+			window.history.back();
+		} else {
+			m.route.set('/');
+		}
+	},
+
+
 	getLoggedInUser: function (token) {
 		var userToken = state.user ? state.user.token : '';
 
