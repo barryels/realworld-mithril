@@ -2,19 +2,10 @@ var domain = require('./../domain');
 
 
 var xssFilters = require('xss-filters');
-
-
-function getMonthName(index, language, type) {
-	var _language = language ? language.toLowerCase() : 'en';
-	var _type = type ? type.toLowerCase() : 'long';
-	var monthNames = {
-		en: {
-			long: ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December']
-		}
-	};
-
-	return monthNames[_language][_type][index];
-}
+var dateFormatTypes = {
+	DEFAULT: 'mmmm d, yyyy',
+	DEFAULT_WITH_TIME: 'mmmm d, yyyy @ HH:MM:ss'
+};
 
 
 function updateDocumentTitle(text) {
@@ -22,14 +13,19 @@ function updateDocumentTitle(text) {
 }
 
 
-function formatDate(date) {
+function formatDate(dateString, format) {
 	// Could use Date.toLocaleString() in future, but currently mobile support is terrible
+	var dateFormat = require('dateformat');
+
+	if (!format) {
+		format = dateFormatTypes.DEFAULT;
+	}
 
 	try {
-		var dateObject = new Date(date);
-		return getMonthName(dateObject.getMonth()) + ' ' + dateObject.getDate() + ', ' + dateObject.getFullYear();
+		var date = new Date(dateString);
+		return dateFormat(date, format);
 	} catch (e) {
-		return date;
+		return dateString;
 	}
 }
 
@@ -42,7 +38,7 @@ function convertMarkdownToHTML(content) {
 
 
 function formatArticleCommentBodyText(content) {
-	return convertMarkdownToHTML(xssFilters.inHTMLData(content));
+	return convertMarkdownToHTML(xssFilters.inSingleQuotedAttr(content));
 }
 
 
@@ -62,6 +58,7 @@ function getUserImageOrDefault(user) {
 
 module.exports = {
 	updateDocumentTitle: updateDocumentTitle,
+	dateFormats: dateFormatTypes,
 	formatDate: formatDate,
 	formatArticleCommentBodyText: formatArticleCommentBodyText,
 	convertMarkdownToHTML: convertMarkdownToHTML,
