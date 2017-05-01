@@ -10,6 +10,11 @@ var state = {
 		offset: 0,
 		total: 0
 	},
+	articleListTypes: {
+		GLOBAL: 'GLOBAL',
+		USER_FAVORITED: 'USER_FAVORITED',
+		USER_OWNED: 'USER_OWNED'
+	},
 	articlesByTag: {},
 	tags: {},
 	selectedArticle: {
@@ -115,10 +120,13 @@ function getArticles(payload) {
 var actions = {
 
 	setSelectedArticles: function (payload) {
+		payload = payload || {};
+
 		state.selectedArticles.isLoading = true;
 		state.selectedArticles.list = null;
 		state.selectedArticles.total = 0;
-		state.selectedArticles.limit = payload.limit ? payload.limit : 0;
+		state.selectedArticles.type = payload.type ? payload.type : state.articleListTypes.GLOBAL;
+		state.selectedArticles.limit = payload.limit ? payload.limit : 10;
 		state.selectedArticles.offset = payload.offset ? payload.offset : 0;
 
 		return getArticles(payload)
