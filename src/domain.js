@@ -3,7 +3,13 @@ var m = require('mithril');
 
 var state = {
 	appTitle: 'Conduit',
-	articles: null,
+	selectedArticles: {
+		isLoading: false,
+		limit: 0,
+		list: null,
+		offset: 0,
+		total: 0
+	},
 	articlesByTag: {},
 	tags: {},
 	selectedArticle: {
@@ -86,6 +92,12 @@ function getArticles(payload) {
 	?offset=0
 	*/
 
+	// if (!payload) {
+	// 	payload = {
+	// 		limit: 3
+	// 	};
+	// }
+
 	var queryString = m.buildQueryString(payload);
 
 	return m.request({
@@ -93,7 +105,8 @@ function getArticles(payload) {
 		url: API_BASE_URI + '/articles?' + queryString
 	})
 		.then(function (response) {
-			return response.articles;
+			// return []; // Test empty response
+			return response;
 		});
 }
 
@@ -101,20 +114,27 @@ function getArticles(payload) {
 
 var actions = {
 
-	getAllArticles: function () {
-		return getArticles()
-			.then(function (articles) {
-				state.articles = articles;
-				// state.articles = []; // Test empty response
+	setSelectedArticles: function (payload) {
+		state.selectedArticles.isLoading = true;
+		state.selectedArticles.list = null;
+		state.selectedArticles.total = 0;
+		state.selectedArticles.limit = payload.limit ? payload.limit : 0;
+		state.selectedArticles.offset = payload.offset ? payload.offset : 0;
+
+		return getArticles(payload)
+			.then(function (response) {
+				state.selectedArticles.list = response.articles;
+				state.selectedArticles.total = response.articlesCount;
+				state.selectedArticles.isLoading = false;
 			});
 	},
 
 
 	getArticlesByTag: function (tag) {
 		return getArticles({ tag: tag })
-			.then(function (articles) {
+			.then(function (response) {
 				state.articlesByTag.tag = tag;
-				state.articlesByTag.list = articles;
+				state.articlesByTag.list = response.articles;
 			});
 	},
 

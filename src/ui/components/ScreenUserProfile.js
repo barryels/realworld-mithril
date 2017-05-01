@@ -22,7 +22,6 @@ function getUserProfile() {
 
 function oninit() {
 	getUserProfile();
-	domain.actions.getAllArticles();
 }
 
 
@@ -41,14 +40,16 @@ function onupdate() {
 
 
 function view() {
+	var username = m.route.param('username') || '';
+
 	return m('.profile-page',
 		[
 			m(UserInfoBanner, { currentUser: domain.store.user, data: domain.store.selectedUserProfile.data, isLoading: domain.store.selectedUserProfile.isLoading }),
 			m('.container', [
 				m('.row', [
 					m('.col-md-12', [
-						m(UserArticlesToggle, { username: state.username }),
-						m(ArticleList, { articles: domain.store.articles })
+						m(UserArticlesToggle, { username: username }),
+						m(ArticleList, { limit: 5, author: username })
 					])
 				])
 			])

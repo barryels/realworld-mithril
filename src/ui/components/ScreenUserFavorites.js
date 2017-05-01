@@ -20,7 +20,6 @@ function getUserProfile() {
 
 function oninit() {
 	getUserProfile();
-	domain.actions.getAllArticles();
 }
 
 

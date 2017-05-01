@@ -16,7 +16,6 @@ function onTagItemClick(tag) {
 
 function oninit() {
 	utils.updateDocumentTitle('Home');
-	domain.actions.getAllArticles();
 	domain.actions.getTags();
 }
 
@@ -35,7 +34,7 @@ function view() {
 				m('.row', [
 					m('.col-md-9', [
 						m(FeedToggle),
-						m(ArticleList, { articles: domain.store.articles })
+						m(ArticleList, { limit: 10 })
 					]),
 					m('.col-md-3', [
 						m('.sidebar', m(PopularTagList, { fn_onTagItemClick: onTagItemClick, isLoading: domain.store.tags.isLoading, list: domain.store.tags.list }))
