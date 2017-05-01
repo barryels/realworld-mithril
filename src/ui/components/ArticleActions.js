@@ -45,8 +45,6 @@ function view(vnode) {
 		}
 	};
 
-	console.log('article', article);
-
 	return [
 		m('span', { key: 'updateButton' },
 			m('button.btn.btn-outline-secondary.btn-sm', { onclick: onEditButtonClick.bind(this), disabled: vnode.state.isDeleteArticleBusy }, [
