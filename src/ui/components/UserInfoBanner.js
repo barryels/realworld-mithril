@@ -52,7 +52,6 @@ function getActionButton(data, currentUser) {
 
 
 function view(vnode) {
-	console.log(vnode.attrs.data);
 	var data = vnode.attrs.data ? vnode.attrs.data : {
 		bio: '',
 		image: '',
