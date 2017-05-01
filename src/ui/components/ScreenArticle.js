@@ -6,7 +6,7 @@ var utils = require('./../utils');
 var Banner = require('./Banner');
 var ArticleBanner = require('./ArticleBanner');
 var ArticleContent = require('./ArticleContent');
-var ArticleMeta = require('./ArticleMeta');
+var ArticleMetaAndActions = require('./ArticleMetaAndActions');
 var Comments = require('./Comments');
 
 
@@ -56,7 +56,7 @@ function view() {
 				]),
 				m('hr'),
 				m('div.article-actions', [
-					m(ArticleMeta, { article: domain.store.selectedArticle })
+					m(ArticleMetaAndActions, { article: domain.store.selectedArticle })
 				]),
 				m('div.row',
 					m('div.col-xs-12.col-md-8.offset-md-2',

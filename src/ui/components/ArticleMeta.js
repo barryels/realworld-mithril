@@ -6,7 +6,7 @@ var Link = require('./Link');
 
 
 function view(vnode) {
-	var article = vnode.attrs.article.data;
+	var article = vnode.attrs.article ? vnode.attrs.article.data : null;
 	var content = m('div', '...');
 
 	if (article) {
@@ -21,7 +21,9 @@ function view(vnode) {
 		];
 	}
 
-	return m('div.article-meta', content);
+	return m('div.article-meta', { style: vnode.attrs.style }, [
+		content
+	]);
 };
 
 

@@ -24,6 +24,7 @@ var state = {
 	userUpdateSettingsErrors: null,
 	isCreateArticleBusy: false,
 	createArticleErrors: null,
+	isDeleteArticleBusy: false,
 	user: null,
 	selectedUserProfile: {
 		data: null,
@@ -192,6 +193,31 @@ var actions = {
 			})
 			.then(function () {
 				state.isCreateArticleBusy = false;
+			});
+	},
+
+
+	deleteArticle: function (slug) {
+		state.isDeleteArticleBusy = true;
+		m.redraw(); // This shouldn't be necessary
+
+		m.request({
+			method: 'DELETE',
+			url: API_BASE_URI + '/articles/' + slug,
+			headers: {
+				'Authorization': 'Token ' + state.user.token
+			}
+		})
+			.then(function (response) {
+				console.info(response);
+				state.isDeleteArticleBusy = false;
+				// if (response) {
+				redirectToPreviousPageOrHome();
+				// }
+			})
+			.catch(function (e) {
+				state.isDeleteArticleBusy = false;
+				console.warn(getErrorMessageFromAPIErrorObject(e));
 			});
 	},
 
