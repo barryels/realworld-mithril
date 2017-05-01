@@ -2,6 +2,8 @@ var m = require('mithril');
 
 
 var domain = require('./../../domain');
+var UserFollowButton = require('./UserFollowButton');
+var ArticleFavoriteButton = require('./ArticleFavoriteButton');
 
 
 function onEditButtonClick(e) {
@@ -37,17 +39,30 @@ function onupdate(vnode) {
 
 
 function view(vnode) {
+	var article = vnode.attrs.article.data ? vnode.attrs.article.data : {
+		author: {
+			username: null
+		}
+	};
+
+	console.log('article', article);
+
 	return [
 		m('span', { key: 'updateButton' },
 			m('button.btn.btn-outline-secondary.btn-sm', { onclick: onEditButtonClick.bind(this), disabled: vnode.state.isDeleteArticleBusy }, [
 				m('i.ion-edit'), m('span', ' Edit Article')
 			])
 		),
+		m('span', ' '),
 		m('span', { key: 'deleteButton' },
 			m('button.btn.btn-outline-danger.btn-sm', { onclick: onDeleteButtonClick.bind(this), disabled: vnode.state.isDeleteArticleBusy }, [
 				m('i.ion-trash-a'), m('span', ' Delete Article')
 			])
-		)
+		),
+		m('span', ' '),
+		m(UserFollowButton, { username: article.author.username }),
+		m('span', ' '),
+		m(ArticleFavoriteButton, { article: article })
 	];
 };
 
