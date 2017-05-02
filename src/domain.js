@@ -14,7 +14,7 @@ var state = {
 		type: {
 			name: 'GLOBAL',
 			label: 'Global Feed'
-		}
+		},
 	},
 	articleListTypes: {
 		GLOBAL: {
@@ -141,6 +141,22 @@ function getValueFromSuppliedOrOther(supplied, other) {
 }
 
 
+function setupSelectedArticlesStateForRequest(payload, selectedArticles) {
+	var selectedArticles = {
+		isLoading: true,
+		list: null,
+		total: 0,
+		type: getValueFromSuppliedOrOther(payload.type, state.articleListTypes.type),
+		limit: getValueFromSuppliedOrOther(payload.limit, state.articleListTypes.limit),
+		offset: getValueFromSuppliedOrOther(payload.offset, state.articleListTypes.offset),
+		author: getValueFromSuppliedOrOther(payload.author, state.articleListTypes.author),
+		favorited: getValueFromSuppliedOrOther(payload.favorited, state.articleListTypes.favorited)
+	};
+
+	return selectedArticles;
+}
+
+
 
 var actions = {
 
@@ -148,14 +164,7 @@ var actions = {
 		var request = {};
 		payload = payload || {};
 
-		state.selectedArticles.isLoading = true;
-		state.selectedArticles.list = null;
-		state.selectedArticles.total = 0;
-		state.selectedArticles.type = getValueFromSuppliedOrOther(payload.type, state.articleListTypes.type);
-		state.selectedArticles.limit = getValueFromSuppliedOrOther(payload.limit, state.articleListTypes.limit);
-		state.selectedArticles.offset = getValueFromSuppliedOrOther(payload.offset, state.articleListTypes.offset);
-		state.selectedArticles.author = getValueFromSuppliedOrOther(payload.author, state.articleListTypes.author);
-		state.selectedArticles.favorited = getValueFromSuppliedOrOther(payload.favorited, state.articleListTypes.favorited);
+		state.selectedArticles = setupSelectedArticlesStateForRequest(payload);
 
 		request.limit = state.selectedArticles.limit;
 		request.offset = state.selectedArticles.offset;
