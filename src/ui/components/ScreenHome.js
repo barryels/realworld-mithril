@@ -33,7 +33,13 @@ function view() {
 			m('.container.page', [
 				m('.row', [
 					m('.col-md-9', [
-						m(FeedToggle, { currentType: domain.store.selectedArticles.type, user: domain.store.user }),
+						m(FeedToggle, {
+							currentType: domain.store.selectedArticles.type, username: domain.store.user ? domain.store.user.username : '', linkTypes: [
+								domain.store.articleListTypes.USER_FAVORITED,
+								domain.store.articleListTypes.GLOBAL,
+								domain.store.articleListTypes.USER_OWNED
+							]
+						}),
 						m(ArticleList, { limit: 10 })
 					]),
 					m('.col-md-3', [

@@ -4,7 +4,7 @@ var m = require('mithril');
 var domain = require('./../../domain');
 var utils = require('./../utils');
 var UserInfoBanner = require('./UserInfoBanner');
-var UserArticlesToggle = require('./UserArticlesToggle');
+var FeedToggle = require('./FeedToggle');
 var ArticleList = require('./ArticleList');
 
 
@@ -48,8 +48,13 @@ function view() {
 			m('.container', [
 				m('.row', [
 					m('.col-md-12', [
-						m(UserArticlesToggle, { username: username }),
-						m(ArticleList, { limit: 5, author: username })
+						m(FeedToggle, {
+							currentType: domain.store.selectedArticles.type, username: username, linkTypes: [
+								domain.store.articleListTypes.USER_OWNED,
+								domain.store.articleListTypes.USER_FAVORITED
+							]
+						}),
+						m(ArticleList, { limit: 5 })
 					])
 				])
 			])

@@ -5,15 +5,30 @@ var state = {
 	appTitle: 'Conduit',
 	selectedArticles: {
 		isLoading: false,
-		limit: 0,
 		list: null,
+		author: '',
+		favorited: '',
+		limit: 10,
 		offset: 0,
-		total: 0
+		total: 0,
+		type: {
+			name: 'GLOBAL',
+			label: 'Global Feed'
+		}
 	},
 	articleListTypes: {
-		GLOBAL: 'GLOBAL',
-		USER_FAVORITED: 'USER_FAVORITED',
-		USER_OWNED: 'USER_OWNED'
+		GLOBAL: {
+			name: 'GLOBAL',
+			label: 'Global Feed'
+		},
+		USER_FAVORITED: {
+			name: 'USER_FAVORITED',
+			label: 'Your Feed'
+		},
+		USER_OWNED: {
+			name: 'USER_OWNED',
+			label: 'My Articles'
+		}
 	},
 	articlesByTag: {},
 	tags: {},
@@ -116,20 +131,40 @@ function getArticles(payload) {
 }
 
 
+function isValueNullOrUndefined(value) {
+	return (value === null) || typeof value === 'undefined';
+}
+
+
+function getValueFromSuppliedOrOther(supplied, other) {
+	return !isValueNullOrUndefined(supplied) ? supplied : other;
+}
+
+
 
 var actions = {
 
 	setSelectedArticles: function (payload) {
+		var request = {};
 		payload = payload || {};
 
 		state.selectedArticles.isLoading = true;
 		state.selectedArticles.list = null;
 		state.selectedArticles.total = 0;
-		state.selectedArticles.type = payload.type ? payload.type : state.articleListTypes.GLOBAL;
-		state.selectedArticles.limit = payload.limit ? payload.limit : 10;
-		state.selectedArticles.offset = payload.offset ? payload.offset : 0;
+		state.selectedArticles.type = getValueFromSuppliedOrOther(payload.type, state.articleListTypes.type);
+		state.selectedArticles.limit = getValueFromSuppliedOrOther(payload.limit, state.articleListTypes.limit);
+		state.selectedArticles.offset = getValueFromSuppliedOrOther(payload.offset, state.articleListTypes.offset);
+		state.selectedArticles.author = getValueFromSuppliedOrOther(payload.author, state.articleListTypes.author);
+		state.selectedArticles.favorited = getValueFromSuppliedOrOther(payload.favorited, state.articleListTypes.favorited);
 
-		return getArticles(payload)
+		request.limit = state.selectedArticles.limit;
+		request.offset = state.selectedArticles.offset;
+		request.author = state.selectedArticles.author;
+		request.favorited = state.selectedArticles.favorited;
+
+		console.info('domain.setSelectedArticles()', payload, request);
+
+		return getArticles(request)
 			.then(function (response) {
 				state.selectedArticles.list = response.articles;
 				state.selectedArticles.total = response.articlesCount;
