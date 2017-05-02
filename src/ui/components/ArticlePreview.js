@@ -20,35 +20,38 @@ function view(vnode) {
 			FAVORITED_CLASS :
 			NOT_FAVORITED_CLASS;
 
-	return m('div.article-preview', [
-		m('.article-meta', [
-			m(Link, { to: '/@' + article.author.username },
-				m('img', { src: article.author.image })
-			),
+	return m('.article-preview',
+		m('.container', [
+			m('.article-meta', [
+				m(Link, { to: '/@' + article.author.username },
+					m('img', { src: article.author.image })
+				),
 
-			m('.info', [
-				m(Link, { to: '/@' + article.author.username, className: 'author' }, article.author.username),
-				m('.date', new Date(article.createdAt).toDateString())
+				m('.info', [
+					m(Link, { to: '/@' + article.author.username, className: 'author' }, article.author.username),
+					m('.date', new Date(article.createdAt).toDateString())
+				]),
+
+				m('.pull-xs-right',
+					m('button', { className: favoriteButtonClass, onclick: onFavoriteButtonClick }, [
+						m('i.ion-heart'),
+						m('span', ' ' + article.favoritesCount)
+					])
+				)
+
 			]),
 
-			m('.pull-xs-right',
-				m('button', { className: favoriteButtonClass, onclick: onFavoriteButtonClick }, [
-					m('i.ion-heart'),
-					m('span', ' ' + article.favoritesCount)
-				])
-			)
+			m(Link, { to: '/article/' + article.slug, className: 'preview-link' }, [
+				m('h1', article.title),
+				m('p', article.description),
+				m('span', 'Read more...'),
+				m('ul.tag-list', article.tagList.map(function (tag) {
+					return m('li.tag-default tag-pill tag-outline', { key: tag }, tag);
+				}))
+			])
 
-		]),
-
-		m(Link, { to: '/article/' + article.slug, className: 'preview-link' }, [
-			m('h1', article.title),
-			m('p', article.description),
-			m('span', 'Read more...'),
-			m('ul.tag-list', article.tagList.map(function (tag) {
-				return m('li.tag-default tag-pill tag-outline', { key: tag }, tag);
-			}))
 		])
-	]);
+	);
 };
 
 
