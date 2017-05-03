@@ -15,52 +15,27 @@ var ScreenEditor = require('./screens/ScreenEditor');
 
 
 var routes = {
-	'/': {
-		view: function () {
-			return m(LayoutDefault, m(ScreenHome));
-		}
-	},
-	'/article/:slug': {
-		view: function () {
-			return m(LayoutDefault, m(ScreenArticle));
-		}
-	},
-	'/register': {
-		view: function () {
-			return m(LayoutDefault, m(ScreenUserRegister));
-		}
-	},
-	'/login': {
-		view: function () {
-			return m(LayoutDefault, m(ScreenUserLogin));
-		}
-	},
-	'/@:username': {
-		view: function () {
-			return m(LayoutDefault, m(ScreenUserProfile));
-		}
-	},
-	'/@:username/favorites': {
-		view: function () {
-			return m(LayoutDefault, m(ScreenUserFavorites));
-		}
-	},
-	'/settings': {
-		view: function () {
-			return m(LayoutDefault, m(ScreenUserSettings));
-		}
-	},
-	'/editor': {
-		view: function () {
-			return m(LayoutDefault, m(ScreenEditor));
-		}
-	},
-	'/editor/:slug': {
-		view: function () {
-			return m(LayoutDefault, m(ScreenEditor));
-		}
-	}
+	'/': buildRoute(ScreenHome),
+	'/article/:slug': buildRoute(ScreenArticle),
+	'/register': buildRoute(ScreenUserRegister),
+	'/login': buildRoute(ScreenUserLogin),
+	'/@:username': buildRoute(ScreenUserProfile),
+	'/@:username/favorites': buildRoute(ScreenUserFavorites),
+	'/settings': buildRoute(ScreenUserSettings),
+	'/editor': buildRoute(ScreenEditor),
+	'/editor/:slug': buildRoute(ScreenEditor)
 };
+
+
+function buildRoute(screen, layout) {
+	layout = layout || LayoutDefault;
+
+	return {
+		render: function () {
+			return m(layout, m(screen));
+		}
+	};
+}
 
 
 function init() {
