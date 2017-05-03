@@ -3,10 +3,10 @@ var m = require('mithril');
 
 var domain = require('./../../domain');
 var utils = require('./../utils');
-var Banner = require('./Banner');
-var ArticleList = require('./ArticleList');
-var FeedToggle = require('./FeedToggle');
-var PopularTagList = require('./PopularTagList');
+var Banner = require('./../components/Banner');
+var ArticleList = require('./../components/ArticleList');
+var FeedToggle = require('./../components/FeedToggle');
+var PopularTagList = require('./../components/PopularTagList');
 
 
 function onTagItemClick(tag) {

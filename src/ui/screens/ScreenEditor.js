@@ -3,8 +3,8 @@ var m = require('mithril');
 
 var domain = require('./../../domain');
 var utils = require('./../utils');
-var NewArticleForm = require('./NewArticleForm');
-var ListErrors = require('./ListErrors');
+var NewArticleForm = require('./../components/NewArticleForm');
+var ListErrors = require('./../components/ListErrors');
 
 
 function oninit() {

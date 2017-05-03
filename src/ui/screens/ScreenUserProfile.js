@@ -3,9 +3,9 @@ var m = require('mithril');
 
 var domain = require('./../../domain');
 var utils = require('./../utils');
-var UserInfoBanner = require('./UserInfoBanner');
-var FeedToggle = require('./FeedToggle');
-var ArticleList = require('./ArticleList');
+var UserInfoBanner = require('./../components/UserInfoBanner');
+var FeedToggle = require('./../components/FeedToggle');
+var ArticleList = require('./../components/ArticleList');
 
 
 var state = {

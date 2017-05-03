@@ -3,9 +3,9 @@ var m = require('mithril');
 
 var domain = require('./../../domain');
 var utils = require('./../utils');
-var Link = require('./Link');
-var UserLoginForm = require('./UserLoginForm');
-var ListErrors = require('./ListErrors');
+var Link = require('./../components/Link');
+var UserLoginForm = require('./../components/UserLoginForm');
+var ListErrors = require('./../components/ListErrors');
 
 
 function redirectIfUserLoggedIn() {

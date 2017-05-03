@@ -3,9 +3,9 @@ var m = require('mithril');
 
 var domain = require('./../../domain');
 var utils = require('./../utils');
-var Link = require('./Link');
-var ListErrors = require('./ListErrors');
-var UserRegistrationForm = require('./UserRegistrationForm');
+var Link = require('./../components/Link');
+var ListErrors = require('./../components/ListErrors');
+var UserRegistrationForm = require('./../components/UserRegistrationForm');
 
 
 function oninit() {

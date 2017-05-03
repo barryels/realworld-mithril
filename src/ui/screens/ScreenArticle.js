@@ -3,11 +3,11 @@ var m = require('mithril');
 
 var domain = require('./../../domain');
 var utils = require('./../utils');
-var Banner = require('./Banner');
-var ArticleBanner = require('./ArticleBanner');
-var ArticleContent = require('./ArticleContent');
-var ArticleMetaAndActions = require('./ArticleMetaAndActions');
-var Comments = require('./Comments');
+var Banner = require('./../components/Banner');
+var ArticleBanner = require('./../components/ArticleBanner');
+var ArticleContent = require('./../components/ArticleContent');
+var ArticleMetaAndActions = require('./../components/ArticleMetaAndActions');
+var Comments = require('./../components/Comments');
 
 
 var state = {

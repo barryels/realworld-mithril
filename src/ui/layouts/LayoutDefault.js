@@ -4,9 +4,9 @@ var m = require('mithril');
 var name = 'LayoutDefault';
 
 
-var AppHeader = require('./AppHeader');
-var ScreenContent = require('./ScreenContent');
-var AppFooter = require('./AppFooter');
+var AppHeader = require('./../components/AppHeader');
+var ScreenContent = require('./../components/ScreenContent');
+var AppFooter = require('./../components/AppFooter');
 
 
 function view(vnode) {

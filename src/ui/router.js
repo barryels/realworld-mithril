@@ -1,17 +1,17 @@
 var m = require('mithril');
 
 
-var LayoutDefault = require('./components/LayoutDefault');
+var LayoutDefault = require('./layouts/LayoutDefault');
 
 
-var ScreenHome = require('./components/ScreenHome');
-var ScreenArticle = require('./components/ScreenArticle');
-var ScreenUserLogin = require('./components/ScreenUserLogin');
-var ScreenUserRegister = require('./components/ScreenUserRegister');
-var ScreenUserProfile = require('./components/ScreenUserProfile');
-var ScreenUserSettings = require('./components/ScreenUserSettings');
-var ScreenUserFavorites = require('./components/ScreenUserFavorites');
-var ScreenEditor = require('./components/ScreenEditor');
+var ScreenHome = require('./screens/ScreenHome');
+var ScreenArticle = require('./screens/ScreenArticle');
+var ScreenUserLogin = require('./screens/ScreenUserLogin');
+var ScreenUserRegister = require('./screens/ScreenUserRegister');
+var ScreenUserProfile = require('./screens/ScreenUserProfile');
+var ScreenUserSettings = require('./screens/ScreenUserSettings');
+var ScreenUserFavorites = require('./screens/ScreenUserFavorites');
+var ScreenEditor = require('./screens/ScreenEditor');
 
 
 var routes = {

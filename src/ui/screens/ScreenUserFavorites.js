@@ -3,7 +3,7 @@ var m = require('mithril');
 
 var domain = require('./../../domain');
 var utils = require('./../utils');
-var Banner = require('./Banner');
+var Banner = require('./../components/Banner');
 
 
 var state = {
