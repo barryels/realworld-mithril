@@ -20,7 +20,7 @@
   },
   "homepage": "https://github.com/barryels/realworld-mithril#readme",
   "scripts": {
-    "ui-server": "./node_modules/http-server/bin/http-server public -p 3000 -s",
+    "ui-server": "node ./node_modules/http-server/bin/http-server public -p 3000 -s",
     "ui-build-js-prod": "browserify src/index.js -o public/main.js",
     "ui-build-js-watch": "watchify src/index.js --debug --verbose -o public/main.js",
     "dev": "npm run ui-build-js-watch & npm run ui-server",
