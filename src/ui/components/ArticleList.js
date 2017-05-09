@@ -27,7 +27,7 @@ function getCurrentLimitFromArticles(articles) {
 
 
 function updateSelectedArticles() {
-	// domain.actions.setSelectedArticles({
+	// domain.actions.setCurrentlyActiveArticles({
 		// limit: limit,
 		// offset: offset,
 		// author: author

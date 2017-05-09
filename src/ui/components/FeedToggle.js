@@ -4,7 +4,7 @@ var m = require('mithril');
 var domain = require('./../../domain');
 
 
-function setSelectedArticles(vnode, type) {
+function setCurrentlyActiveArticles(vnode, type) {
 	var payload = {
 		type: type
 	};
@@ -21,14 +21,14 @@ function setSelectedArticles(vnode, type) {
 			break;
 	}
 
-	domain.actions.setSelectedArticles(payload);
+	domain.actions.setCurrentlyActiveArticles(payload);
 }
 
 
 function onLinkClick(vnode, type, e) {
 	e.preventDefault();
 
-	setSelectedArticles(vnode, type);
+	setCurrentlyActiveArticles(vnode, type);
 }
 
 
@@ -45,7 +45,7 @@ function buildLink(vnode, linkType, currentType) {
 
 function oninit(vnode) {
 	console.log('vnode.attrs.currentType', vnode.attrs.currentType);
-	setSelectedArticles(vnode, vnode.attrs.linkTypes[0]);
+	setCurrentlyActiveArticles(vnode, vnode.attrs.linkTypes[0]);
 }
 
 

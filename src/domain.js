@@ -160,7 +160,7 @@ function setupSelectedArticlesStateForRequest(payload, selectedArticles) {
 
 var actions = {
 
-	setSelectedArticles: function (payload) {
+	setCurrentlyActiveArticles: function (payload) {
 		var request = {};
 		payload = payload || {};
 
@@ -171,7 +171,7 @@ var actions = {
 		request.author = state.selectedArticles.author;
 		request.favorited = state.selectedArticles.favorited;
 
-		console.info('domain.setSelectedArticles()', payload, request);
+		console.info('domain.setCurrentlyActiveArticles()', payload, request);
 
 		return getArticles(request)
 			.then(function (response) {
