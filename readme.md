@@ -16,7 +16,7 @@ For more information on how this works with other frontends/backends, head over 
 ## How it works
 
 
-### 10 000 foot View
+### 10 000 Foot View
 
 ```
 
@@ -33,7 +33,7 @@ For more information on how this works with other frontends/backends, head over 
             -----+       domain       <-----+
                  |                    |
                  |    Updates its     |
-                 | internal state obj |
+                 |   internal state   |
                  |   in response to   |
                  |      API data      |
                  |                    |
@@ -46,17 +46,17 @@ For more information on how this works with other frontends/backends, head over 
 ```
 
 
-`domain.js`
+`domain/index.js`
 
 Handles app-level concerns and is UI agnostic. It handles communication with the external API (which should be abstracted away into a separate module for larger apps). One of its responsibilities is to abstract any API-level changes away from the rest of the app.. It has a basic `store` data object which can be (relatively) easily replaced by Redux, mobX, etc. with/out Immutable data structures.
 
 
-`router.js`
+`ui/router.js`
 
 [TODO Add detail]
 
 
-`components/*.js`
+`ui/components/*.js`
 
 [TODO Add detail]
 
