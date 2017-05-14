@@ -48,12 +48,7 @@ For more information on how this works with other frontends/backends, head over 
 
 `domain.js`
 
-Handles app-level concerns and is UI agnostic. It knows nothing about Mithril and is therefore an optional element in a Mithril-based app. Its basic `store` data object can be (relatively) easily replaced with mobX, Redux, etc. with/out Immutable data structures.
-
-
-`api-adapter.js`
-
-Handles communication with external APIs. Its responsibility is to abstract any API-level changes away from the rest of the app.
+Handles app-level concerns and is UI agnostic. It handles communication with the external API (which should be abstracted away into a separate module for larger apps). One of its responsibilities is to abstract any API-level changes away from the rest of the app.. It has a basic `store` data object which can be (relatively) easily replaced by Redux, mobX, etc. with/out Immutable data structures.
 
 
 `router.js`
@@ -62,6 +57,7 @@ Handles communication with external APIs. Its responsibility is to abstract any 
 
 
 `components/*.js`
+
 [TODO Add detail]
 
 
