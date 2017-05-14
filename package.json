@@ -27,7 +27,7 @@
     "start": "npm run dev",
     "deploy": "npm run ui-build-js-prod && ./node_modules/.bin/surge ./public realworld-mithril.surge.sh",
     "lint": "eslint \"src/**/*.js\"",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "npm run lint"
   },
   "dependencies": {
     "dateformat": "^2.0.0",
