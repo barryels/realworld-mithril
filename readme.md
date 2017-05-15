@@ -48,7 +48,10 @@ For more information on how this works with other frontends/backends, head over 
 
 `domain/index.js`
 
-Handles app-level concerns and is UI agnostic. It handles communication with the external API (which should be abstracted away into a separate module for larger apps). One of its responsibilities is to abstract any API-level changes away from the rest of the app.. It has a basic `store` data object which can be (relatively) easily replaced by Redux, mobX, etc. with/out Immutable data structures.
+Handles app-level concerns and is UI agnostic. It handles communication with the external API (which should be abstracted away into a separate module for larger apps). It has a basic `store` data object which can be (relatively) easily replaced by Redux, mobX, etc. with/out Immutable data structures.
+It has two public interfaces:
+- `store` is a way to read values
+- `actions` has a set of functions which can be called in order to mutate state
 
 
 `ui/router.js`
