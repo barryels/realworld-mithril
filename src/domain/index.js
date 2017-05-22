@@ -321,6 +321,11 @@ var actions = {
 	},
 
 
+	goToArticleEditScreen: function (articleSlug) {
+		m.route.set('/editor/' + articleSlug);
+	},
+
+
 	registerNewUser: function (payload) {
 		state.isUserRegistrationBusy = true;
 		state.userRegistrationErrors = null;
@@ -461,8 +466,24 @@ var actions = {
 
 
 	followUser: function (username) {
+		return alert('followUser() -> ' +  username);
 		m.request({
 			method: 'POST',
+			url: API_BASE_URI + '/profiles/' + username + '/follow',
+			headers: {
+				'Authorization': 'Token ' + state.user.token
+			},
+		})
+			.then(function () {
+				// TODO
+			});
+	},
+
+
+	unfollowUser: function (username) {
+		return alert('unfollowUser() -> ' +  username);
+		m.request({
+			method: 'DELETE',
 			url: API_BASE_URI + '/profiles/' + username + '/follow',
 			headers: {
 				'Authorization': 'Token ' + state.user.token

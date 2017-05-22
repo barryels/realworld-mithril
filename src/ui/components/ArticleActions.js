@@ -5,22 +5,10 @@ var m = require('mithril');
 
 
 var domain = require('./../../domain');
-var UserFollowButton = require('./UserFollowButton');
 var ArticleFavoriteButton = require('./ArticleFavoriteButton');
-
-
-function onEditButtonClick(e) {
-	e.preventDefault();
-
-	m.route.set('/editor/' + this.article.slug);
-}
-
-
-function onDeleteButtonClick(e) {
-	e.preventDefault();
-
-	domain.actions.deleteArticle(this.article.slug);
-}
+var ArticleUpdateButton = require('./ArticleUpdateButton');
+var ArticleDeleteButton = require('./ArticleDeleteButton');
+var UserFollowUnfollowButton = require('./UserFollowUnfollowButton');
 
 
 function updateState(vnode) {
@@ -48,20 +36,14 @@ function view(vnode) {
 		}
 	};
 
+	var loggedInUsername = domain.store.user ? domain.store.user.username : '';
+
 	return [
-		m('span', { key: 'updateButton' },
-			m('button.btn.btn-outline-secondary.btn-sm', { onclick: onEditButtonClick.bind(this), disabled: vnode.state.isDeleteArticleBusy }, [
-				m('i.ion-edit'), m('span', ' Edit Article')
-			])
-		),
+		m(ArticleUpdateButton, { action: domain.actions.goToArticleEditScreen.bind(null, article.slug) }),
 		m('span', ' '),
-		m('span', { key: 'deleteButton' },
-			m('button.btn.btn-outline-danger.btn-sm', { onclick: onDeleteButtonClick.bind(this), disabled: vnode.state.isDeleteArticleBusy }, [
-				m('i.ion-trash-a'), m('span', ' Delete Article')
-			])
-		),
+		m(ArticleDeleteButton, { action: domain.actions.deleteArticle.bind(null, article.slug) }),
 		m('span', ' '),
-		m(UserFollowButton, { username: article.author.username }),
+		m(UserFollowUnfollowButton, { isFollowing: article.author.following, username: article.author.username, loggedInUsername: loggedInUsername }),
 		m('span', ' '),
 		m(ArticleFavoriteButton, { article: article })
 	];

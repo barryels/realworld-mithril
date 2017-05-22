@@ -47,7 +47,7 @@ function view() {
 
 	return m('.profile-page',
 		[
-			m(UserInfoBanner, { currentUser: domain.store.user, data: domain.store.selectedUserProfile.data, isLoading: domain.store.selectedUserProfile.isLoading }),
+			m(UserInfoBanner, { loggedInUser: domain.store.user, selectedUser: domain.store.selectedUserProfile.data, isLoading: domain.store.selectedUserProfile.isLoading }),
 			m('.container', [
 				m('.row', [
 					m('.col-md-12', [
