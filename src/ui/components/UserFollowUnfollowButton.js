@@ -11,7 +11,7 @@ var UserUnfollowButton = require('./UserUnfollowButton');
 function getActionButton(isFollowing, username, loggedInUsername) {
 
 	if (!loggedInUsername) {
-		return null;
+		return m(UserFollowButton, { username: username, action: m.route.set.bind(null, '/register') });
 	}
 
 	if (username === loggedInUsername) {
