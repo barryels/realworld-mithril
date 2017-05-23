@@ -9,23 +9,50 @@ var Link = require('./Link');
 
 
 function view(vnode) {
-	var currentUser = vnode.attrs.currentUser;
-	var linkItemHome = m('li.nav-item', m(Link, { className: 'nav-link', to: '/' }, 'Home'));
+	var currentUser = vnode.attrs.currentUser ? vnode.attrs.currentUser : {
+		username: ''
+	};
 
-	if (!currentUser) {
-		return m('ul', { className: vnode.attrs.className }, [
-			linkItemHome,
-			m('li.nav-item', m(Link, { className: 'nav-link', to: '/login' }, 'Sign in')),
-			m('li.nav-item', m(Link, { className: 'nav-link', to: '/register' }, 'Sign up'))
-		]);
+	var allLinks = {
+		home: { route: '/', label: 'Home' },
+		login: { route: '/login', label: 'Sign in' },
+		register: { route: '/register', label: 'Sign up' },
+		editor: { route: '/editor', label: '<i class="ion-compose"></i> New Article' },
+		settings: { route: '/settings', label: '<i class="ion-gear-a"></i> Settings' },
+		user: { route: '/@' + currentUser.username, label: '<img class="user-pic" src="' + utils.getUserImageOrDefault(currentUser) + '" /> ' + currentUser.username }
+	};
+
+	var linksForGuest = [
+		allLinks.home,
+		allLinks.login,
+		allLinks.register
+	];
+
+	var linksForMember = [
+		allLinks.home,
+		allLinks.editor,
+		allLinks.settings,
+		allLinks.user
+	];
+
+
+	var linksToDisplay = linksForGuest;
+	if (currentUser.username) {
+		linksToDisplay = linksForMember;
 	}
 
-	return m('ul', { className: vnode.attrs.className }, [
-		linkItemHome,
-		m('li.nav-item', m(Link, { className: 'nav-link', to: '/editor' }, [m('i.ion-compose'), m('span', ' New Article')])),
-		m('li.nav-item', m(Link, { className: 'nav-link', to: '/settings' }, [m('i.ion-gear-a'), m('span', ' Settings')])),
-		m('li.nav-item', m(Link, { className: 'nav-link', to: '/@' + currentUser.username }, [m('img.user-pic', { src: utils.getUserImageOrDefault(currentUser) }), m('span.hidden-sm-down', ' ' + currentUser.username)])),
-	]);
+	return m('ul', { className: vnode.attrs.className },
+		linksToDisplay.map(function (link) {
+			var className = 'nav-link';
+
+			if (m.route.get() === link.route) {
+				className += ' active';
+			}
+
+			return m('li.nav-item', m(Link, { className: className, to: link.route }, m.trust(link.label)));
+		})
+	);
+
 };
 
 
