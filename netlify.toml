@@ -1,0 +1,2 @@
+command = "npm run ui-build-js-prod"
+publish = "public/"
