@@ -1,2 +1,3 @@
-command = "npm run ui-build-js-prod"
-publish = "public/"
+[build]
+  command = "npm run ui-build-js-prod"
+  publish = "public/"
