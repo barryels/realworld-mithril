@@ -10,49 +10,49 @@ var Banner = require('./../components/Banner');
 
 
 var state = {
-	username: ''
+  username: ''
 };
 
 
 function getUserProfile() {
-	state.username = m.route.param('username');
-	domain.actions.getUserProfile(state.username);
-	document.body.scrollTop = 0;
+  state.username = m.route.param('username');
+  domain.actions.getUserProfile(state.username);
+  document.body.scrollTop = 0;
 }
 
 
 function oninit() {
-	getUserProfile();
+  getUserProfile();
 }
 
 
 function onbeforeupdate() {
-	if (state.username !== m.route.param('username')) {
-		getUserProfile();
-	}
+  if (state.username !== m.route.param('username')) {
+    getUserProfile();
+  }
 
-	return true;
+  return true;
 }
 
 
 function onupdate() {
-	utils.updateDocumentTitle('Articles favourited by ' + state.username);
+  utils.updateDocumentTitle('Articles favourited by ' + state.username);
 }
 
 
 function view() {
-	return m('div',
-		[
-			m(Banner),
-			m('h1', 'ScreenUserFavorites')
-		]
-	);
+  return m('div',
+    [
+      m(Banner),
+      m('h1', 'ScreenUserFavorites')
+    ]
+  );
 };
 
 
 module.exports = {
-	oninit: oninit,
-	onbeforeupdate: onbeforeupdate,
-	onupdate: onupdate,
-	view: view
+  oninit: oninit,
+  onbeforeupdate: onbeforeupdate,
+  onupdate: onupdate,
+  view: view
 };

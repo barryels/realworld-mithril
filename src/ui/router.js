@@ -5,6 +5,7 @@ var m = require('mithril');
 
 
 var LayoutDefault = require('./layouts/LayoutDefault');
+var LayoutHome = require('./layouts/LayoutHome');
 
 
 var ScreenHome = require('./screens/ScreenHome');
@@ -18,35 +19,35 @@ var ScreenEditor = require('./screens/ScreenEditor');
 
 
 var routes = {
-	'/': buildRoute(ScreenHome),
-	'/article/:slug': buildRoute(ScreenArticle),
-	'/register': buildRoute(ScreenUserRegister),
-	'/login': buildRoute(ScreenUserLogin),
-	'/@:username': buildRoute(ScreenUserProfile),
-	'/@:username/favorites': buildRoute(ScreenUserFavorites),
-	'/settings': buildRoute(ScreenUserSettings),
-	'/editor': buildRoute(ScreenEditor),
-	'/editor/:slug': buildRoute(ScreenEditor)
+  '/': buildRoute(ScreenHome, LayoutHome),
+  '/article/:slug': buildRoute(ScreenArticle),
+  '/register': buildRoute(ScreenUserRegister),
+  '/login': buildRoute(ScreenUserLogin),
+  '/@:username': buildRoute(ScreenUserProfile),
+  '/@:username/favorites': buildRoute(ScreenUserFavorites),
+  '/settings': buildRoute(ScreenUserSettings),
+  '/editor': buildRoute(ScreenEditor),
+  '/editor/:slug': buildRoute(ScreenEditor)
 };
 
 
 function buildRoute(screen, layout) {
-	layout = layout || LayoutDefault;
+  layout = layout || LayoutDefault;
 
-	return {
-		render: function () {
-			return m(layout, m(screen));
-		}
-	};
+  return {
+    render: function () {
+      return m(layout, m(screen));
+    }
+  };
 }
 
 
 function init() {
-	m.route.prefix('?');
-	m.route(document.getElementById('app'), '/', routes);
+  m.route.prefix('?');
+  m.route(document.getElementById('app'), '/', routes);
 }
 
 
 module.exports = {
-	init: init
+  init: init
 };

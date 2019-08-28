@@ -9,22 +9,22 @@ var TagList = require('./TagList');
 
 
 function view(vnode) {
-	var article = vnode.attrs.article.data;
-	var content = m('div', '...');
+  var article = vnode.attrs.article.data;
+  var content = m('div', '...');
 
-	if (article) {
-		content = [
-			m('div.col-xs-12', [
-				m('div', m.trust(utils.convertMarkdownToHTML(article.body))),
-				m(TagList, { list: article.tagList, style: TagList.styles.OUTLINE })
-			])
-		];
-	}
+  if (article) {
+    content = [
+      m('div.col-xs-12', [
+        m('div', m.trust(utils.convertMarkdownToHTML(article.body))),
+        m(TagList, { list: article.tagList, style: TagList.styles.OUTLINE })
+      ])
+    ];
+  }
 
-	return m('div.article-content', content);
+  return m('div.article-content', content);
 };
 
 
 module.exports = {
-	view: view
+  view: view
 };

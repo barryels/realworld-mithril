@@ -12,63 +12,63 @@ var ArticleList = require('./../components/ArticleList');
 
 
 var state = {
-	username: ''
+  username: ''
 };
 
 
 function getUserProfile() {
-	state.username = m.route.param('username');
-	domain.actions.getUserProfile(state.username);
-	document.body.scrollTop = 0;
+  state.username = m.route.param('username');
+  domain.actions.getUserProfile(state.username);
+  document.body.scrollTop = 0;
 }
 
 
 function oninit() {
-	getUserProfile();
+  getUserProfile();
 }
 
 
 function onbeforeupdate() {
-	if (state.username !== m.route.param('username')) {
-		getUserProfile();
-	}
+  if (state.username !== m.route.param('username')) {
+    getUserProfile();
+  }
 
-	return true;
+  return true;
 }
 
 
 function onupdate() {
-	utils.updateDocumentTitle('@' + state.username);
+  utils.updateDocumentTitle('@' + state.username);
 }
 
 
 function view() {
-	var username = m.route.param('username') || '';
+  var username = m.route.param('username') || '';
 
-	return m('.profile-page',
-		[
-			m(UserInfoBanner, { loggedInUser: domain.store.user, selectedUser: domain.store.selectedUserProfile.data, isLoading: domain.store.selectedUserProfile.isLoading }),
-			m('.container', [
-				m('.row', [
-					m('.col-md-12', [
-						m(FeedToggle, {
-							currentType: domain.store.selectedArticles.type, username: username, linkTypes: [
-								domain.store.articleListTypes.USER_OWNED,
-								domain.store.articleListTypes.USER_FAVORITED
-							]
-						}),
-						m(ArticleList, { limit: 5 })
-					])
-				])
-			])
-		]
-	);
+  return m('.profile-page',
+    [
+      m(UserInfoBanner, { loggedInUser: domain.store.user, selectedUser: domain.store.selectedUserProfile.data, isLoading: domain.store.selectedUserProfile.isLoading }),
+      m('.container', [
+        m('.row', [
+          m('.col-md-12', [
+            m(FeedToggle, {
+              currentType: domain.store.selectedArticles.type, username: username, linkTypes: [
+                domain.store.articleListTypes.USER_OWNED,
+                domain.store.articleListTypes.USER_FAVORITED
+              ]
+            }),
+            m(ArticleList, { limit: 5 })
+          ])
+        ])
+      ])
+    ]
+  );
 };
 
 
 module.exports = {
-	oninit: oninit,
-	onbeforeupdate: onbeforeupdate,
-	onupdate: onupdate,
-	view: view
+  oninit: oninit,
+  onbeforeupdate: onbeforeupdate,
+  onupdate: onupdate,
+  view: view
 };

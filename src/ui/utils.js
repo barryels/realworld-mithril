@@ -6,65 +6,64 @@ var domain = require('./../domain');
 
 var xssFilters = require('xss-filters');
 var dateFormatTypes = {
-	DEFAULT: 'mmmm d, yyyy',
-	DEFAULT_WITH_TIME: 'mmmm d, yyyy @ HH:MM:ss'
+  DEFAULT: 'mmmm d, yyyy',
+  DEFAULT_WITH_TIME: 'mmmm d, yyyy @ HH:MM:ss'
 };
 
 
 function updateDocumentTitle(text) {
-	document.title = text + ' — ' + domain.store.appTitle;
+  document.title = text + ' — ' + domain.store.appTitle;
 }
 
 
 function formatDate(dateString, format) {
-	// Could use Date.toLocaleString() in future, but currently mobile support is terrible
-	var dateFormat = require('dateformat');
+  var dateFormat = require('dateformat');
 
-	if (!format) {
-		format = dateFormatTypes.DEFAULT;
-	}
+  if (!format) {
+    format = dateFormatTypes.DEFAULT;
+  }
 
-	try {
-		var date = new Date(dateString);
-		return dateFormat(date, format);
-	} catch (e) {
-		return dateString;
-	}
+  try {
+    var date = new Date(dateString);
+    return dateFormat(date, format);
+  } catch (e) {
+    return dateString;
+  }
 }
 
 
 function convertMarkdownToHTML(content) {
-	var marked = require('marked');
+  var marked = require('marked');
 
-	return marked(content);
+  return marked(content);
 }
 
 
 function formatArticleCommentBodyText(content) {
-	return convertMarkdownToHTML(xssFilters.inSingleQuotedAttr(content));
+  return convertMarkdownToHTML(xssFilters.inSingleQuotedAttr(content));
 }
 
 
 function getLinkToUserProfile(username) {
-	return '/@' + username;
+  return '/@' + username;
 }
 
 
 function getUserImageOrDefault(user) {
-	if (user && (user.image)) {
-		return user.image;
-	}
+  if (user && (user.image)) {
+    return user.image;
+  }
 
-	return 'https://static.productionready.io/images/smiley-cyrus.jpg';
+  return 'https://static.productionready.io/images/smiley-cyrus.jpg';
 }
 
 
 module.exports = {
-	updateDocumentTitle: updateDocumentTitle,
-	dateFormats: dateFormatTypes,
-	formatDate: formatDate,
-	formatArticleCommentBodyText: formatArticleCommentBodyText,
-	convertMarkdownToHTML: convertMarkdownToHTML,
-	getLinkToUserProfile: getLinkToUserProfile,
-	getUserImageOrDefault: getUserImageOrDefault
+  updateDocumentTitle: updateDocumentTitle,
+  dateFormats: dateFormatTypes,
+  formatDate: formatDate,
+  formatArticleCommentBodyText: formatArticleCommentBodyText,
+  convertMarkdownToHTML: convertMarkdownToHTML,
+  getLinkToUserProfile: getLinkToUserProfile,
+  getUserImageOrDefault: getUserImageOrDefault
 };
