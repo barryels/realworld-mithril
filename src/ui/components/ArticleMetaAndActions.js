@@ -1,21 +1,16 @@
-'use strict';
+import m from "mithril";
 
-
-var m = require('mithril');
-
-
-var ArticleMeta = require('./ArticleMeta');
-var ArticleActions = require('./ArticleActions');
-
+import ArticleMeta from "./ArticleMeta";
+import ArticleActions from "./ArticleActions";
 
 function view(vnode) {
   return [
-    m(ArticleMeta, { article: vnode.attrs.article, style: 'display:inline-block; ' }),
-    m(ArticleActions, { article: vnode.attrs.article })
+    m(ArticleMeta, {
+      article: vnode.attrs.article,
+      style: "display:inline-block; ",
+    }),
+    m(ArticleActions, { article: vnode.attrs.article }),
   ];
-};
+}
 
-
-module.exports = {
-  view: view
-};
+export default { view };

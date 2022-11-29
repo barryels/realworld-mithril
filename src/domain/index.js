@@ -1,47 +1,43 @@
-'use strict';
-
-
-var m = require('mithril');
-
+import m from "mithril";
 
 var state = {
-  appTitle: 'Conduit',
+  appTitle: "Conduit",
   selectedArticles: {
     isLoading: false,
     list: null,
-    author: '',
-    favorited: '',
+    author: "",
+    favorited: "",
     limit: 10,
     offset: 0,
     total: 0,
     type: {
-      name: 'GLOBAL',
-      label: 'Global Feed'
+      name: "GLOBAL",
+      label: "Global Feed",
     },
   },
   articleListTypes: {
     GLOBAL: {
-      name: 'GLOBAL',
-      label: 'Global Feed'
+      name: "GLOBAL",
+      label: "Global Feed",
     },
     USER_FAVORITED: {
-      name: 'USER_FAVORITED',
-      label: 'Your Feed'
+      name: "USER_FAVORITED",
+      label: "Your Feed",
     },
     USER_OWNED: {
-      name: 'USER_OWNED',
-      label: 'My Articles'
-    }
+      name: "USER_OWNED",
+      label: "My Articles",
+    },
   },
   articlesByTag: {},
   tags: {},
   selectedArticle: {
     data: null,
-    isLoading: false
+    isLoading: false,
   },
   selectedArticleComments: {
     data: null,
-    isLoading: false
+    isLoading: false,
   },
   isArticleCommentCreationBusy: false,
   userAuthorizationToken: null,
@@ -57,18 +53,15 @@ var state = {
   user: null,
   selectedUserProfile: {
     data: null,
-    isLoading: false
-  }
+    isLoading: false,
+  },
 };
 
-
-var API_BASE_URI = '//conduit.productionready.io/api';
-
+var API_BASE_URI = "https://api.realworld.io/api";
 
 function init() {
-  actions.getLoggedInUser(window.localStorage.getItem('jwt'));
+  // actions.getLoggedInUser(window.localStorage.getItem("jwt"));
 }
-
 
 function getErrorMessageFromAPIErrorObject(e) {
   var response = null;
@@ -77,25 +70,23 @@ function getErrorMessageFromAPIErrorObject(e) {
     response = JSON.parse(e.message).errors;
   } catch (error) {
     response = {
-      'An unhandled error occurred': []
+      "An unhandled error occurred": [],
     };
   }
 
   return response;
 }
 
-
 function redirectToPreviousPageOrHome() {
   if (window.history.length > 0) {
     window.history.back();
   } else {
-    m.route.set('/');
+    m.route.set("/");
   }
 }
 
-
 function getArticles(payload) {
-	/*
+  /*
 	TODO
 
 	Filter by author:
@@ -123,46 +114,56 @@ function getArticles(payload) {
 
   var queryString = m.buildQueryString(payload);
 
-  return m.request({
-    method: 'GET',
-    url: API_BASE_URI + '/articles?' + queryString
-  })
+  return m
+    .request({
+      method: "GET",
+      url: API_BASE_URI + "/articles?" + queryString,
+    })
     .then(function (response) {
       // return []; // Test empty response
       return response;
     });
 }
 
-
 function isValueNullOrUndefined(value) {
-  return (value === null) || typeof value === 'undefined';
+  return value === null || typeof value === "undefined";
 }
-
 
 function getValueFromSuppliedOrOther(supplied, other) {
   return !isValueNullOrUndefined(supplied) ? supplied : other;
 }
-
 
 function setupSelectedArticlesStateForRequest(payload, selectedArticles) {
   var selectedArticles = {
     isLoading: true,
     list: null,
     total: 0,
-    type: getValueFromSuppliedOrOther(payload.type, state.articleListTypes.type),
-    limit: getValueFromSuppliedOrOther(payload.limit, state.articleListTypes.limit),
-    offset: getValueFromSuppliedOrOther(payload.offset, state.articleListTypes.offset),
-    author: getValueFromSuppliedOrOther(payload.author, state.articleListTypes.author),
-    favorited: getValueFromSuppliedOrOther(payload.favorited, state.articleListTypes.favorited)
+    type: getValueFromSuppliedOrOther(
+      payload.type,
+      state.articleListTypes.type
+    ),
+    limit: getValueFromSuppliedOrOther(
+      payload.limit,
+      state.articleListTypes.limit
+    ),
+    offset: getValueFromSuppliedOrOther(
+      payload.offset,
+      state.articleListTypes.offset
+    ),
+    author: getValueFromSuppliedOrOther(
+      payload.author,
+      state.articleListTypes.author
+    ),
+    favorited: getValueFromSuppliedOrOther(
+      payload.favorited,
+      state.articleListTypes.favorited
+    ),
   };
 
   return selectedArticles;
 }
 
-
-
 var actions = {
-
   setCurrentlyActiveArticles: function (payload) {
     var request = {};
     payload = payload || {};
@@ -174,34 +175,31 @@ var actions = {
     request.author = state.selectedArticles.author;
     request.favorited = state.selectedArticles.favorited;
 
-    console.info('domain.setCurrentlyActiveArticles()', payload, request);
+    console.info("domain.setCurrentlyActiveArticles()", payload, request);
 
-    return getArticles(request)
-      .then(function (response) {
-        state.selectedArticles.list = response.articles;
-        state.selectedArticles.total = response.articlesCount;
-        state.selectedArticles.isLoading = false;
-      });
+    return getArticles(request).then(function (response) {
+      state.selectedArticles.list = response.articles;
+      state.selectedArticles.total = response.articlesCount;
+      state.selectedArticles.isLoading = false;
+    });
   },
-
 
   getArticlesByTag: function (tag) {
-    return getArticles({ tag: tag })
-      .then(function (response) {
-        state.articlesByTag.tag = tag;
-        state.articlesByTag.list = response.articles;
-      });
+    return getArticles({ tag: tag }).then(function (response) {
+      state.articlesByTag.tag = tag;
+      state.articlesByTag.list = response.articles;
+    });
   },
-
 
   setSelectedArticle: function (slug) {
     state.selectedArticle.data = null;
     state.selectedArticle.isLoading = true;
 
-    return m.request({
-      method: 'GET',
-      url: API_BASE_URI + '/articles/' + slug
-    })
+    return m
+      .request({
+        method: "GET",
+        url: API_BASE_URI + "/articles/" + slug,
+      })
       .then(function (response) {
         state.selectedArticle.data = response.article;
       })
@@ -210,15 +208,15 @@ var actions = {
       });
   },
 
-
   setSelectedArticleComments: function (slug) {
     state.selectedArticleComments.data = null;
     state.selectedArticleComments.isLoading = true;
 
-    return m.request({
-      method: 'GET',
-      url: API_BASE_URI + '/articles/' + slug + '/comments'
-    })
+    return m
+      .request({
+        method: "GET",
+        url: API_BASE_URI + "/articles/" + slug + "/comments",
+      })
       .then(function (response) {
         state.selectedArticleComments.data = response.comments;
       })
@@ -227,41 +225,40 @@ var actions = {
       });
   },
 
-
   createArticle: function (payload) {
     state.isCreateArticleBusy = true;
     state.createArticleErrors = null;
 
     // Format tagList before sending to API
     var tagList = payload.tagList
-      .split(',')
-      .join('-|-')
-      .split(' ')
-      .join('-|-')
-      .split('-|-')
+      .split(",")
+      .join("-|-")
+      .split(" ")
+      .join("-|-")
+      .split("-|-")
       .filter(function (tag) {
-        return tag !== '';
+        return tag !== "";
       });
 
     m.request({
-      method: 'POST',
-      url: API_BASE_URI + '/articles',
+      method: "POST",
+      url: API_BASE_URI + "/articles",
       headers: {
-        'Authorization': 'Token ' + state.user.token
+        Authorization: "Token " + state.user.token,
       },
       data: {
         article: {
           title: payload.title,
           description: payload.description,
           body: payload.body,
-          tagList: tagList
-        }
-      }
+          tagList: tagList,
+        },
+      },
     })
       .then(function (response) {
         state.createArticleErrors = null;
         state.newArticle = response.article;
-        m.route.set('/article/' + state.newArticle.slug);
+        m.route.set("/article/" + state.newArticle.slug);
       })
       .catch(function (e) {
         state.createArticleErrors = getErrorMessageFromAPIErrorObject(e);
@@ -271,17 +268,16 @@ var actions = {
       });
   },
 
-
   deleteArticle: function (slug) {
     state.isDeleteArticleBusy = true;
     m.redraw(); // This shouldn't be necessary
 
     m.request({
-      method: 'DELETE',
-      url: API_BASE_URI + '/articles/' + slug,
+      method: "DELETE",
+      url: API_BASE_URI + "/articles/" + slug,
       headers: {
-        'Authorization': 'Token ' + state.user.token
-      }
+        Authorization: "Token " + state.user.token,
+      },
     })
       .then(function (response) {
         console.info(response);
@@ -296,21 +292,20 @@ var actions = {
       });
   },
 
-
   createArticleComment: function (payload) {
     state.isArticleCommentCreationBusy = true;
 
     m.request({
-      method: 'POST',
-      url: API_BASE_URI + '/articles/' + payload.articleSlug + '/comments',
+      method: "POST",
+      url: API_BASE_URI + "/articles/" + payload.articleSlug + "/comments",
       headers: {
-        'Authorization': 'Token ' + state.user.token
+        Authorization: "Token " + state.user.token,
       },
       data: {
         comment: {
-          body: payload.body
-        }
-      }
+          body: payload.body,
+        },
+      },
     })
       .then(function () {
         state.isArticleCommentCreationBusy = false;
@@ -320,31 +315,29 @@ var actions = {
       });
   },
 
-
   goToArticleEditScreen: function (articleSlug) {
-    m.route.set('/editor/' + articleSlug);
+    m.route.set("/editor/" + articleSlug);
   },
-
 
   registerNewUser: function (payload) {
     state.isUserRegistrationBusy = true;
     state.userRegistrationErrors = null;
 
     m.request({
-      method: 'POST',
-      url: API_BASE_URI + '/users',
+      method: "POST",
+      url: API_BASE_URI + "/users",
       data: {
         user: {
           email: payload.email,
           password: payload.password,
-          username: payload.username
-        }
-      }
+          username: payload.username,
+        },
+      },
     })
       .then(function (response) {
         state.userRegistrationErrors = null;
         state.user = response.user;
-        window.localStorage.setItem('jwt', state.user.token);
+        window.localStorage.setItem("jwt", state.user.token);
       })
       .catch(function (e) {
         state.userRegistrationErrors = getErrorMessageFromAPIErrorObject(e);
@@ -354,27 +347,26 @@ var actions = {
       });
   },
 
-
   attemptUserLogin: function (email, password) {
-    window.localStorage.setItem('jwt', null);
+    window.localStorage.setItem("jwt", null);
     state.user = null;
     state.isUserLoginBusy = true;
     state.userLoginErrors = null;
 
     m.request({
-      method: 'POST',
-      url: API_BASE_URI + '/users/login',
+      method: "POST",
+      url: API_BASE_URI + "/users/login",
       data: {
         user: {
           email: email,
-          password: password
-        }
-      }
+          password: password,
+        },
+      },
     })
       .then(function (response) {
         state.userLoginErrors = null;
         state.user = response.user;
-        window.localStorage.setItem('jwt', state.user.token);
+        window.localStorage.setItem("jwt", state.user.token);
       })
       .catch(function (e) {
         state.userLoginErrors = getErrorMessageFromAPIErrorObject(e);
@@ -384,39 +376,39 @@ var actions = {
       });
   },
 
-
   redirectAfterUserLoginSuccess: function () {
     redirectToPreviousPageOrHome();
   },
-
 
   redirectAfterUserRegistrationSuccess: function () {
     redirectToPreviousPageOrHome();
   },
 
-
   getLoggedInUser: function (token) {
-    var userToken = state.user ? state.user.token : '';
+    var userToken = state.user ? state.user.token : "";
 
     if (token) {
       userToken = token;
     }
 
     m.request({
-      method: 'GET',
-      url: API_BASE_URI + '/user',
+      method: "GET",
+      url: API_BASE_URI + "/user",
       headers: {
-        'Authorization': 'Token ' + userToken
-      }
+        Authorization: "Token " + userToken,
+      },
     })
       .then(function (response) {
         state.user = response.user;
       })
       .catch(function (e) {
-        console.warn('domain.getLoggedInUser()', e, getErrorMessageFromAPIErrorObject(e));
+        console.warn(
+          "domain.getLoggedInUser()",
+          e,
+          getErrorMessageFromAPIErrorObject(e)
+        );
       });
   },
-
 
   updateUserSettings: function (payload) {
     state.isUserSettingsUpdateBusy = true;
@@ -427,14 +419,14 @@ var actions = {
     }
 
     m.request({
-      method: 'PUT',
-      url: API_BASE_URI + '/user',
+      method: "PUT",
+      url: API_BASE_URI + "/user",
       headers: {
-        'Authorization': 'Token ' + state.user.token
+        Authorization: "Token " + state.user.token,
       },
       data: {
-        user: payload
-      }
+        user: payload,
+      },
     })
       .then(function (response) {
         state.user = response.user;
@@ -447,14 +439,13 @@ var actions = {
       });
   },
 
-
   getUserProfile: function (username) {
     state.selectedUserProfile.isLoading = true;
     state.selectedUserProfile.data = null;
 
     m.request({
-      method: 'GET',
-      url: API_BASE_URI + '/profiles/' + username
+      method: "GET",
+      url: API_BASE_URI + "/profiles/" + username,
     })
       .then(function (response) {
         state.selectedUserProfile.data = response.profile;
@@ -464,50 +455,44 @@ var actions = {
       });
   },
 
-
   followUser: function (username) {
-    return alert('followUser() -> ' + username);
+    return alert("followUser() -> " + username);
     m.request({
-      method: 'POST',
-      url: API_BASE_URI + '/profiles/' + username + '/follow',
+      method: "POST",
+      url: API_BASE_URI + "/profiles/" + username + "/follow",
       headers: {
-        'Authorization': 'Token ' + state.user.token
+        Authorization: "Token " + state.user.token,
       },
-    })
-      .then(function () {
-        // TODO
-      });
+    }).then(function () {
+      // TODO
+    });
   },
-
 
   unfollowUser: function (username) {
-    return alert('unfollowUser() -> ' + username);
+    return alert("unfollowUser() -> " + username);
     m.request({
-      method: 'DELETE',
-      url: API_BASE_URI + '/profiles/' + username + '/follow',
+      method: "DELETE",
+      url: API_BASE_URI + "/profiles/" + username + "/follow",
       headers: {
-        'Authorization': 'Token ' + state.user.token
+        Authorization: "Token " + state.user.token,
       },
-    })
-      .then(function () {
-        // TODO
-      });
+    }).then(function () {
+      // TODO
+    });
   },
-
 
   logUserOut: function () {
     state.user = null;
-    window.localStorage.setItem('jwt', null);
-    m.route.set('/');
+    window.localStorage.setItem("jwt", null);
+    m.route.set("/");
   },
-
 
   getTags: function () {
     state.tags.isLoading = true;
 
     m.request({
-      method: 'GET',
-      url: API_BASE_URI + '/tags',
+      method: "GET",
+      url: API_BASE_URI + "/tags",
     })
       .then(function (response) {
         state.tags.list = response.tags;
@@ -515,13 +500,9 @@ var actions = {
       .then(function () {
         state.tags.isLoading = false;
       });
-  }
-
+  },
 };
 
+const store = state;
 
-module.exports = {
-  init: init,
-  store: state,
-  actions: actions
-};
+export default { init, store, actions };

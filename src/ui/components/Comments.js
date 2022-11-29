@@ -1,21 +1,16 @@
-'use strict';
+import m from "mithril";
 
-
-var m = require('mithril');
-
-
-var Link = require('./Link');
-var NewCommentForm = require('./NewCommentForm');
-var Comment = require('./Comment');
-
+import Link from "./Link";
+import NewCommentForm from "./NewCommentForm";
+import Comment from "./Comment";
 
 function view(vnode) {
   var comments = vnode.attrs.comments.data || [];
-  var header = m('p', [
-    m(Link, { to: '/login' }, 'Sign in'),
-    m('span', ' or '),
-    m(Link, { to: '/register' }, 'Sign up'),
-    m('span', ' to add comments on this article.')
+  var header = m("p", [
+    m(Link, { to: "/login" }, "Sign in"),
+    m("span", " or "),
+    m(Link, { to: "/register" }, "Sign up"),
+    m("span", " to add comments on this article."),
   ]);
   var body = null;
 
@@ -24,7 +19,7 @@ function view(vnode) {
   }
 
   if (vnode.attrs.comments.isLoading) {
-    body = m('div', 'Loading...');
+    body = m("div", "Loading...");
   }
 
   if (comments) {
@@ -33,13 +28,7 @@ function view(vnode) {
     });
   }
 
-  return m('div.comments', [
-    header,
-    body
-  ]);
-};
+  return m("div.comments", [header, body]);
+}
 
-
-module.exports = {
-  view: view
-};
+export default { view };

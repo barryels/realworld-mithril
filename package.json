@@ -2,6 +2,11 @@
   "name": "realworld-mithril",
   "version": "0.1.0",
   "private": true,
+  "type": "module",
+  "engines": {
+    "npm": ">=7.0.0",
+    "node": ">=16.0.0"
+  },
   "description": "Exemplary real world application built with Mithril [TODO add production url]",
   "keywords": [
     "mithril",
@@ -18,28 +23,35 @@
   "bugs": {
     "url": "https://github.com/barryels/realworld-mithril/issues"
   },
-  "homepage": "https://github.com/barryels/realworld-mithril#readme",
+  "homepage": "https://github.com/barryels/realworld-mithril#README",
   "scripts": {
-    "ui-server": "node ./node_modules/http-server/bin/http-server public -p 3001 -s",
-    "ui-build-js-prod": "browserify src/index.js -o public/main.js",
-    "ui-build-js-watch": "watchify src/index.js --debug --verbose -o public/main.js",
-    "dev": "npm-run-all --parallel ui-build-js-watch ui-server",
-    "start": "npm run dev",
-    "deploy": "npm run ui-build-js-prod && ./node_modules/.bin/surge ./public realworld-mithril.surge.sh",
-    "lint": "eslint \"src/**/*.js\"",
-    "test": "npm run lint"
+    "predev": "npm i",
+    "dev": "PORT=3001 vite",
+    "build": "tsc && vite build",
+    "preview": "vite preview",
+    "deploy": "npm run build && ./node_modules/.bin/surge ./public realworld-mithril.surge.sh",
+    "lint": "eslint \"src/**/*.js\""
+  },
+  "eslintConfig": {
+    "rules": {
+      "curly": "error"
+    },
+    "extends": [
+      "react-app",
+      "react-app/jest",
+      "plugin:cypress/recommended"
+    ]
   },
   "dependencies": {
-    "dateformat": "^2.0.0",
-    "marked": "^0.6.2",
-    "mithril": "^1.1.1",
+    "dateformat": "^5.0.3",
+    "marked": "^4.2.3",
+    "mithril": "^2.2.2",
     "xss-filters": "^1.2.7"
   },
   "devDependencies": {
-    "browserify": "^14.3.0",
-    "eslint": "^3.19.0",
-    "http-server": "^0.11.1",
-    "npm-run-all": "^4.0.2",
-    "watchify": "^3.11.1"
+    "@types/mithril": "^2.0.11",
+    "eslint": "^8.28.0",
+    "typescript": "^4.9.3",
+    "vite": "^3.2.4"
   }
 }

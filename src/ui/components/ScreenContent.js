@@ -1,14 +1,7 @@
-'use strict';
-
-
-var m = require('mithril');
-
+import m from "mithril";
 
 function view(vnode) {
-  return m('section', vnode.children);
-};
+  return m("section", vnode.children);
+}
 
-
-module.exports = {
-  view: view
-};
+export default { view };

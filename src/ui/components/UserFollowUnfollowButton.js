@@ -1,17 +1,14 @@
-'use strict';
+import m from "mithril";
 
-
-var m = require('mithril');
-
-
-var UserFollowButton = require('./UserFollowButton');
-var UserUnfollowButton = require('./UserUnfollowButton');
-
+import UserFollowButton from "./UserFollowButton";
+import UserUnfollowButton from "./UserUnfollowButton";
 
 function getActionButton(isFollowing, username, loggedInUsername) {
-
   if (!loggedInUsername) {
-    return m(UserFollowButton, { username: username, action: m.route.set.bind(null, '/register') });
+    return m(UserFollowButton, {
+      username: username,
+      action: m.route.set.bind(null, "/register"),
+    });
   }
 
   if (username === loggedInUsername) {
@@ -25,12 +22,12 @@ function getActionButton(isFollowing, username, loggedInUsername) {
   return m(UserFollowButton, { username: username });
 }
 
-
 function view(vnode) {
-  return getActionButton(vnode.attrs.isFollowing, vnode.attrs.username, vnode.attrs.loggedInUsername);
-};
+  return getActionButton(
+    vnode.attrs.isFollowing,
+    vnode.attrs.username,
+    vnode.attrs.loggedInUsername
+  );
+}
 
-
-module.exports = {
-  view: view
-};
+export default { view };

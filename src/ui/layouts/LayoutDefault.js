@@ -1,28 +1,17 @@
-'use strict';
+import m from "mithril";
 
+import AppHeader from "./../components/AppHeader";
+import ScreenContent from "./../components/ScreenContent";
+import AppFooter from "./../components/AppFooter";
 
-var m = require('mithril');
-
-
-var name = 'LayoutDefault';
-
-
-var AppHeader = require('./../components/AppHeader');
-var ScreenContent = require('./../components/ScreenContent');
-var AppFooter = require('./../components/AppFooter');
-
+const name = "LayoutDefault";
 
 function view(vnode) {
-  return m('div', { className: name },
-    [
-      m(AppHeader),
-      m(ScreenContent, {}, vnode.children),
-      m(AppFooter)
-    ]
-  );
+  return m("div", { className: name }, [
+    m(AppHeader),
+    m(ScreenContent, {}, vnode.children),
+    m(AppFooter),
+  ]);
 }
 
-
-module.exports = {
-  view: view
-};
+export default { view };

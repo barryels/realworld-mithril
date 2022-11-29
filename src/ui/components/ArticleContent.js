@@ -1,30 +1,22 @@
-'use strict';
+import m from "mithril";
 
-
-var m = require('mithril');
-
-
-var utils = require('./../utils');
-var TagList = require('./TagList');
-
+import utils from "./../utils";
+import TagList from "./TagList";
 
 function view(vnode) {
   var article = vnode.attrs.article.data;
-  var content = m('div', '...');
+  var content = m("div", "...");
 
   if (article) {
     content = [
-      m('div.col-xs-12', [
-        m('div', m.trust(utils.convertMarkdownToHTML(article.body))),
-        m(TagList, { list: article.tagList, style: TagList.styles.OUTLINE })
-      ])
+      m("div.col-xs-12", [
+        m("div", m.trust(utils.convertMarkdownToHTML(article.body))),
+        m(TagList, { list: article.tagList, style: TagList.styles.OUTLINE }),
+      ]),
     ];
   }
 
-  return m('div.article-content', content);
-};
+  return m("div.article-content", content);
+}
 
-
-module.exports = {
-  view: view
-};
+export default { view };

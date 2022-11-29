@@ -1,5 +1,7 @@
-'use strict';
+import "./main.css";
 
+import domain from "./domain";
+import router from "./ui/router";
 
-require('./domain').init();
-require('./ui/router').init();
+domain.init();
+router.init();

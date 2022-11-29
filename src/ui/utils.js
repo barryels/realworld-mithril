@@ -1,24 +1,18 @@
-'use strict';
+import domain from "./../domain";
+import dateFormat from "dateformat";
+import { marked } from "marked";
 
-
-var domain = require('./../domain');
-
-
-var xssFilters = require('xss-filters');
-var dateFormatTypes = {
-  DEFAULT: 'mmmm d, yyyy',
-  DEFAULT_WITH_TIME: 'mmmm d, yyyy @ HH:MM:ss'
+import xssFilters from "xss-filters";
+export const dateFormatTypes = {
+  DEFAULT: "mmmm d, yyyy",
+  DEFAULT_WITH_TIME: "mmmm d, yyyy @ HH:MM:ss",
 };
 
-
-function updateDocumentTitle(text) {
-  document.title = text + ' — ' + domain.store.appTitle;
+export function updateDocumentTitle(text) {
+  document.title = text + " — " + domain.store.appTitle;
 }
 
-
-function formatDate(dateString, format) {
-  var dateFormat = require('dateformat');
-
+export function formatDate(dateString, format) {
   if (!format) {
     format = dateFormatTypes.DEFAULT;
   }
@@ -31,39 +25,22 @@ function formatDate(dateString, format) {
   }
 }
 
-
-function convertMarkdownToHTML(content) {
-  var marked = require('marked');
-
+export function convertMarkdownToHTML(content) {
   return marked(content);
 }
 
-
-function formatArticleCommentBodyText(content) {
+export function formatArticleCommentBodyText(content) {
   return convertMarkdownToHTML(xssFilters.inSingleQuotedAttr(content));
 }
 
-
-function getLinkToUserProfile(username) {
-  return '/@' + username;
+export function getLinkToUserProfile(username) {
+  return "/@" + username;
 }
 
-
-function getUserImageOrDefault(user) {
-  if (user && (user.image)) {
+export function getUserImageOrDefault(user) {
+  if (user && user.image) {
     return user.image;
   }
 
-  return 'https://static.productionready.io/images/smiley-cyrus.jpg';
+  return "https://static.productionready.io/images/smiley-cyrus.jpg";
 }
-
-
-module.exports = {
-  updateDocumentTitle: updateDocumentTitle,
-  dateFormats: dateFormatTypes,
-  formatDate: formatDate,
-  formatArticleCommentBodyText: formatArticleCommentBodyText,
-  convertMarkdownToHTML: convertMarkdownToHTML,
-  getLinkToUserProfile: getLinkToUserProfile,
-  getUserImageOrDefault: getUserImageOrDefault
-};
